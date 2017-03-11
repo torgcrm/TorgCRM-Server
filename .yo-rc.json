@@ -29,6 +29,7 @@
     "languages": [
       "ru",
       "en"
-    ]
+    ],
+    "herokuAppName": "torgcrmce-developer"
   }
 }
