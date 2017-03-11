@@ -1,0 +1,14 @@
+version: '2'
+services:
+    torgcrmce-app:
+        image: torgcrmce
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://torgcrmce-postgresql:5432/TorgCRMCE
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+        ports:
+            - 8080:8080
+    torgcrmce-postgresql:
+        extends:
+            file: postgresql.yml
+            service: torgcrmce-postgresql
