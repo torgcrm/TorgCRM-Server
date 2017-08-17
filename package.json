@@ -7,14 +7,17 @@
     "node_modules"
   ],
   "dependencies": {
-    "@angular/common": "4.3.3",
+    "@angular/common": "4.3.5",
     "@angular/compiler": "4.3.3",
     "@angular/core": "4.3.5",
     "@angular/forms": "4.3.3",
     "@angular/http": "4.3.5",
-    "@angular/platform-browser": "4.3.3",
+    "@angular/platform-browser": "4.3.5",
     "@angular/platform-browser-dynamic": "4.3.3",
     "@angular/router": "4.3.3",
+    "@angular/platform-browser": "4.3.3",
+    "@angular/platform-browser-dynamic-4.3.5",
+    "@angular/router": "4.3.5",
     "@ng-bootstrap/ng-bootstrap": "1.0.0-alpha.30",
     "angular2-infinite-scroll": "0.3.5",
     "bootstrap": "4.0.0-alpha.6",
@@ -33,7 +36,7 @@
   "devDependencies": {
     "@angular/cli": "1.2.7",
     "@types/jasmine": "2.5.53",
-    "@types/node": "8.0.19",
+    "@types/node": "8.0.23",
     "add-asset-html-webpack-plugin": "2.1.1",
     "angular2-template-loader": "0.6.2",
     "awesome-typescript-loader": "3.2.2",
