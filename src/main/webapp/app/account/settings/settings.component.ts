@@ -19,10 +19,9 @@ export class SettingsComponent implements OnInit {
         private languageService: JhiLanguageService,
         private languageHelper: JhiLanguageHelper
     ) {
-        this.languageService.setLocations(['settings']);
     }
 
-    ngOnInit () {
+    ngOnInit() {
         this.principal.identity().then((account) => {
             this.settingsAccount = this.copyAccount(account);
         });
@@ -31,7 +30,7 @@ export class SettingsComponent implements OnInit {
         });
     }
 
-    save () {
+    save() {
         this.account.save(this.settingsAccount).subscribe(() => {
             this.error = null;
             this.success = 'OK';
@@ -49,7 +48,7 @@ export class SettingsComponent implements OnInit {
         });
     }
 
-    copyAccount (account) {
+    copyAccount(account) {
         return {
             activated: account.activated,
             email: account.email,

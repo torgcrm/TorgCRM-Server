@@ -1,8 +1,8 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ParseLinks } from 'ng-jhipster';
 
 import { TorgCrmceSharedModule } from '../shared';
+/* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 import {
     adminState,
@@ -30,11 +30,11 @@ import {
     UserModalService
 } from './';
 
-
 @NgModule({
     imports: [
         TorgCrmceSharedModule,
-        RouterModule.forRoot(adminState, { useHash: true })
+        RouterModule.forChild(adminState),
+        /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],
     declarations: [
         AuditsComponent,

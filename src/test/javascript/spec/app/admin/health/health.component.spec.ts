@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { TorgCrmceTestModule } from '../../../test.module';
 import { JhiHealthCheckComponent } from '../../../../../../main/webapp/app/admin/health/health.component';
 import { JhiHealthService } from '../../../../../../main/webapp/app/admin/health/health.service';
-
 
 describe('Component Tests', () => {
 
@@ -18,18 +17,10 @@ describe('Component Tests', () => {
                 imports: [TorgCrmceTestModule],
                 declarations: [JhiHealthCheckComponent],
                 providers: [
-                    JhiHealthService,
-                    {
-                        provide: NgbModal,
-                        useValue: null
-                    }
+                    JhiHealthService
                 ]
             })
-            .overrideComponent(JhiHealthCheckComponent, {
-                set: {
-                    template: ''
-                }
-            })
+            .overrideTemplate(JhiHealthCheckComponent, '')
             .compileComponents();
         }));
 
@@ -81,7 +72,6 @@ describe('Component Tests', () => {
             const expected = [
                 {
                     'name': 'db',
-                    'error': undefined,
                     'status': 'UP',
                     'details': {
                         'database': 'H2',
@@ -125,7 +115,6 @@ describe('Component Tests', () => {
             const expected = [
                 {
                     'name': 'db',
-                    'error': undefined,
                     'status': 'UP',
                     'details': {
                         'database': 'H2',
@@ -139,7 +128,6 @@ describe('Component Tests', () => {
                 },
                 {
                     'name': 'system.subsystem1',
-                    'error': undefined,
                     'status': 'UP',
                     'details': {
                         'property1': 'system.subsystem1.property1'
@@ -186,7 +174,6 @@ describe('Component Tests', () => {
             const expected = [
                 {
                     'name': 'db',
-                    'error': undefined,
                     'status': 'UP',
                     'details': {
                         'database': 'H2',
@@ -200,7 +187,6 @@ describe('Component Tests', () => {
                 },
                 {
                     'name': 'system',
-                    'error': undefined,
                     'status': 'DOWN',
                     'details': {
                         'property1': 'system.property1'
@@ -208,7 +194,6 @@ describe('Component Tests', () => {
                 },
                 {
                     'name': 'system.subsystem1',
-                    'error': undefined,
                     'status': 'UP',
                     'details': {
                         'property1': 'system.subsystem1.property1'
@@ -255,7 +240,6 @@ describe('Component Tests', () => {
             const expected = [
                 {
                     'name': 'db',
-                    'error': undefined,
                     'status': 'UP',
                     'details': {
                         'database': 'H2',
@@ -274,7 +258,6 @@ describe('Component Tests', () => {
                 },
                 {
                     'name': 'system.subsystem1',
-                    'error': undefined,
                     'status': 'UP',
                     'details': {
                         'property1': 'system.subsystem1.property1'
