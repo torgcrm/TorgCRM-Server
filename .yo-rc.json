@@ -1,7 +1,7 @@
 {
   "generator-jhipster": {
-    "jhipsterVersion": "4.0.7",
-    "baseName": "TorgCRMCE",
+    "jhipsterVersion": "4.13.0",
+    "baseName": "TorgCRM Server",
     "packageName": "ru.torgcrm",
     "packageFolder": "ru/torgcrm",
     "serverPort": "8080",
@@ -18,7 +18,7 @@
     "buildTool": "maven",
     "enableSocialSignIn": false,
     "jwtSecretKey": "ddfd68c6ab0dbeb3474baa4443d137e15127fa4f",
-    "clientFramework": "angular2",
+    "clientFramework": "angularX",
     "useSass": true,
     "clientPackageManager": "yarn",
     "applicationType": "monolith",
@@ -30,6 +30,6 @@
       "ru",
       "en"
     ],
-    "herokuAppName": "torgcrmce-developer"
+    "herokuAppName": "torgcrm-developer"
   }
 }

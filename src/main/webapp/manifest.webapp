@@ -1,6 +1,6 @@
 {
-  "name": "TorgCrmce",
-  "short_name": "TorgCrmce",
+  "name": "TorgCrm",
+  "short_name": "TorgCrm",
   "icons": [
       {
           "src": "./content/images/logo-jhipster.png",

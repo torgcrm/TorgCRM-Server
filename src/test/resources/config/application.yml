@@ -16,14 +16,14 @@
 
 spring:
     application:
-        name: TorgCRMCE
+        name: TorgCRM
     jackson:
         serialization.write_dates_as_timestamps: false
     cache:
         type: none
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:h2:mem:TorgCRMCE;DB_CLOSE_DELAY=-1
+        url: jdbc:h2:mem:TorgCRM;DB_CLOSE_DELAY=-1
         name:
         username:
         password:
@@ -88,7 +88,7 @@ jhipster:
     security:
         authentication:
             jwt:
-                secret: ddfd68c6ab0dbeb3474baa4443d137e15127fa4f
+                secret: 71ad4017850dddcfe3a7033729908de8aaaf04d3
                 # Token is valid 24 hours
                 token-validity-in-seconds: 86400
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration

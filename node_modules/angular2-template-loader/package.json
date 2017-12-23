@@ -1,0 +1,40 @@
+{
+  "name": "angular2-template-loader",
+  "version": "0.6.2",
+  "description": "Angular2 webpack loader that inlines your angular2 templates and stylesheets into angular components.  ",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec",
+    "coverage": "istanbul cover _mocha -- -R spec",
+    "preversion": "npm test",
+    "version": "git add -A",
+    "postversion": "git push && git push --tags",
+    "release:patch": "npm version patch && git push && git push --tags && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheLarkInn/angular2-template-loader.git"
+  },
+  "keywords": [
+    "angular2",
+    "webpack",
+    "angularjs",
+    "loader",
+    "angular2-loader"
+  ],
+  "author": "Sean Larkin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheLarkInn/angular2-template-loader/issues"
+  },
+  "homepage": "https://github.com/TheLarkInn/angular2-template-loader#readme",
+  "devDependencies": {
+    "codecov": "^1.0.1",
+    "istanbul": "^0.4.3",
+    "mocha": "^2.5.3",
+    "should": "^9.0.0"
+  },
+  "dependencies": {
+    "loader-utils": "^0.2.15"
+  }
+}

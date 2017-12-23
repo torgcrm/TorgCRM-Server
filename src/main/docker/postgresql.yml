@@ -1,11 +1,11 @@
 version: '2'
 services:
-    torgcrmce-postgresql:
+    torgcrm-postgresql:
         image: postgres:9.6.5
         # volumes:
-        #     - ~/volumes/jhipster/TorgCRMCE/postgresql/:/var/lib/postgresql/data/
+        #     - ~/volumes/jhipster/TorgCRM/postgresql/:/var/lib/postgresql/data/
         environment:
-            - POSTGRES_USER=TorgCRMCE
+            - POSTGRES_USER=TorgCRM
             - POSTGRES_PASSWORD=
         ports:
             - 5432:5432

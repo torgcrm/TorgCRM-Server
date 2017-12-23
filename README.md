@@ -1,4 +1,4 @@
-# TorgCRMCE
+# TorgCRM
 This application was generated using JHipster 4.13.0, you can find documentation and help at [http://www.jhipster.tech/documentation-archive/v4.13.0](http://www.jhipster.tech/documentation-archive/v4.13.0).
 
 ## Development
@@ -89,7 +89,7 @@ will generate few files:
 
 ## Building for production
 
-To optimize the TorgCRMCE application for production, run:
+To optimize the TorgCRM application for production, run:
 
     ./mvnw -Pprod clean package
 

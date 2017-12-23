@@ -6,7 +6,7 @@ import { JhiEventManager } from 'ng-jhipster';
 import { LoginService } from '../../../../../../main/webapp/app/shared/login/login.service';
 import { JhiLoginModalComponent } from '../../../../../../main/webapp/app/shared/login/login.component';
 import { StateStorageService } from '../../../../../../main/webapp/app/shared/auth/state-storage.service';
-import { TorgCrmceTestModule } from '../../../test.module';
+import { TorgCrmTestModule } from '../../../test.module';
 import { MockLoginService } from '../../../helpers/mock-login.service';
 import { MockStateStorageService } from '../../../helpers/mock-state-storage.service';
 
@@ -24,7 +24,7 @@ describe('Component Tests', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [TorgCrmceTestModule],
+                imports: [TorgCrmTestModule],
                 declarations: [JhiLoginModalComponent],
                 providers : [
                     {

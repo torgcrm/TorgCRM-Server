@@ -2,8 +2,8 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import {
-    TorgCrmceSharedLibsModule,
-    TorgCrmceSharedCommonModule,
+    TorgCrmSharedLibsModule,
+    TorgCrmSharedCommonModule,
     CSRFService,
     AuthServerProvider,
     AccountService,
@@ -18,8 +18,8 @@ import {
 
 @NgModule({
     imports: [
-        TorgCrmceSharedLibsModule,
-        TorgCrmceSharedCommonModule
+        TorgCrmSharedLibsModule,
+        TorgCrmSharedCommonModule
     ],
     declarations: [
         JhiLoginModalComponent,
@@ -38,7 +38,7 @@ import {
     ],
     entryComponents: [JhiLoginModalComponent],
     exports: [
-        TorgCrmceSharedCommonModule,
+        TorgCrmSharedCommonModule,
         JhiLoginModalComponent,
         HasAnyAuthorityDirective,
         DatePipe
@@ -46,4 +46,4 @@ import {
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
-export class TorgCrmceSharedModule {}
+export class TorgCrmSharedModule {}

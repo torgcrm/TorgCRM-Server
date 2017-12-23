@@ -4,10 +4,9 @@ import { NgModule, ElementRef, Renderer } from '@angular/core';
 import { MockBackend } from '@angular/http/testing';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiLanguageService, JhiDataUtils, JhiDateUtils, JhiEventManager, JhiAlertService, JhiParseLinks } from 'ng-jhipster';
+import { JhiDataUtils, JhiDateUtils, JhiEventManager, JhiAlertService, JhiParseLinks } from 'ng-jhipster';
 
-import { MockLanguageService, MockLanguageHelper } from './helpers/mock-language.service';
-import { JhiLanguageHelper, Principal, AccountService, LoginModalService } from '../../../main/webapp/app/shared';
+import { Principal, AccountService, LoginModalService } from '../../../main/webapp/app/shared';
 import { MockPrincipal } from './helpers/mock-principal.service';
 import { MockAccountService } from './helpers/mock-account.service';
 import { MockActivatedRoute, MockRouter } from './helpers/mock-route.service';
@@ -22,14 +21,6 @@ import { MockEventManager } from './helpers/mock-event-manager.service';
         JhiParseLinks,
         MockBackend,
         BaseRequestOptions,
-        {
-            provide: JhiLanguageService,
-            useClass: MockLanguageService
-        },
-        {
-            provide: JhiLanguageHelper,
-            useClass: MockLanguageHelper
-        },
         {
             provide: JhiEventManager,
             useClass:  MockEventManager
@@ -83,4 +74,4 @@ import { MockEventManager } from './helpers/mock-event-manager.service';
         }
     ]
 })
-export class TorgCrmceTestModule {}
+export class TorgCrmTestModule {}

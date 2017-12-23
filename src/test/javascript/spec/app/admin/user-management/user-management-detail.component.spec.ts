@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 
-import { TorgCrmceTestModule } from '../../../test.module';
+import { TorgCrmTestModule } from '../../../test.module';
 import { MockActivatedRoute } from '../../../helpers/mock-route.service';
 import { UserMgmtDetailComponent } from '../../../../../../main/webapp/app/admin/user-management/user-management-detail.component';
 import { UserService, User } from '../../../../../../main/webapp/app/shared';
@@ -16,7 +16,7 @@ describe('Component Tests', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [TorgCrmceTestModule],
+                imports: [TorgCrmTestModule],
                 declarations: [UserMgmtDetailComponent],
                 providers: [
                     {

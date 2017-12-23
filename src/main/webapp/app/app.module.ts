@@ -4,12 +4,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Ng2Webstorage } from 'ngx-webstorage';
 
-import { TorgCrmceSharedModule, UserRouteAccessService } from './shared';
-import { TorgCrmceAppRoutingModule} from './app-routing.module';
-import { TorgCrmceHomeModule } from './home/home.module';
-import { TorgCrmceAdminModule } from './admin/admin.module';
-import { TorgCrmceAccountModule } from './account/account.module';
-import { TorgCrmceEntityModule } from './entities/entity.module';
+import { TorgCrmSharedModule, UserRouteAccessService } from './shared';
+import { TorgCrmAppRoutingModule} from './app-routing.module';
+import { TorgCrmHomeModule } from './home/home.module';
+import { TorgCrmAdminModule } from './admin/admin.module';
+import { TorgCrmAccountModule } from './account/account.module';
+import { TorgCrmEntityModule } from './entities/entity.module';
 import { customHttpProvider } from './blocks/interceptor/http.provider';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
 
@@ -21,20 +21,19 @@ import {
     FooterComponent,
     ProfileService,
     PageRibbonComponent,
-    ActiveMenuDirective,
     ErrorComponent
 } from './layouts';
 
 @NgModule({
     imports: [
         BrowserModule,
-        TorgCrmceAppRoutingModule,
+        TorgCrmAppRoutingModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
-        TorgCrmceSharedModule,
-        TorgCrmceHomeModule,
-        TorgCrmceAdminModule,
-        TorgCrmceAccountModule,
-        TorgCrmceEntityModule,
+        TorgCrmSharedModule,
+        TorgCrmHomeModule,
+        TorgCrmAdminModule,
+        TorgCrmAccountModule,
+        TorgCrmEntityModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
@@ -42,7 +41,6 @@ import {
         NavbarComponent,
         ErrorComponent,
         PageRibbonComponent,
-        ActiveMenuDirective,
         FooterComponent
     ],
     providers: [
@@ -53,4 +51,4 @@ import {
     ],
     bootstrap: [ JhiMainComponent ]
 })
-export class TorgCrmceAppModule {}
+export class TorgCrmAppModule {}

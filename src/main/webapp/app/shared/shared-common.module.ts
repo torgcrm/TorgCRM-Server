@@ -1,41 +1,36 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { registerLocaleData } from '@angular/common';
-import locale from '@angular/common/locales/ru';
+import locale from '@angular/common/locales/en';
 
 import {
-    TorgCrmceSharedLibsModule,
-    JhiLanguageHelper,
-    FindLanguageFromKeyPipe,
+    TorgCrmSharedLibsModule,
     JhiAlertComponent,
     JhiAlertErrorComponent
 } from './';
 
 @NgModule({
     imports: [
-        TorgCrmceSharedLibsModule
+        TorgCrmSharedLibsModule
     ],
     declarations: [
-        FindLanguageFromKeyPipe,
         JhiAlertComponent,
         JhiAlertErrorComponent
     ],
     providers: [
-        JhiLanguageHelper,
         Title,
         {
             provide: LOCALE_ID,
-            useValue: 'ru'
+            useValue: 'en'
         },
     ],
     exports: [
-        TorgCrmceSharedLibsModule,
-        FindLanguageFromKeyPipe,
+        TorgCrmSharedLibsModule,
         JhiAlertComponent,
         JhiAlertErrorComponent
     ]
 })
-export class TorgCrmceSharedCommonModule {
+export class TorgCrmSharedCommonModule {
     constructor() {
         registerLocaleData(locale);
     }

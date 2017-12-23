@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, async, inject, fakeAsync, tick } from '@angu
 import { Observable } from 'rxjs/Rx';
 import { Headers } from '@angular/http';
 
-import { TorgCrmceTestModule } from '../../../test.module';
+import { TorgCrmTestModule } from '../../../test.module';
 import { Principal } from '../../../../../../main/webapp/app/shared';
 import { UserMgmtComponent } from '../../../../../../main/webapp/app/admin/user-management/user-management.component';
 import { UserService, User } from '../../../../../../main/webapp/app/shared';
@@ -17,7 +17,7 @@ describe('Component Tests', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [TorgCrmceTestModule],
+                imports: [TorgCrmTestModule],
                 declarations: [UserMgmtComponent],
                 providers: [
                     UserService

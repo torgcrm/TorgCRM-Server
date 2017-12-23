@@ -1,7 +1,7 @@
 {
-  "name": "torg-crmce",
+  "name": "torg-crm",
   "version": "0.0.0",
-  "description": "Description for TorgCRMCE",
+  "description": "Description for TorgCRM",
   "private": true,
   "license": "UNLICENSED",
   "cacheDirectories": [
@@ -62,7 +62,6 @@
     "karma-remap-istanbul": "0.6.0",
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "2.0.4",
-    "merge-jsons-webpack-plugin": "1.0.11",
     "phantomjs-prebuilt": "2.1.16",
     "proxy-middleware": "0.15.0",
     "rimraf": "2.6.1",

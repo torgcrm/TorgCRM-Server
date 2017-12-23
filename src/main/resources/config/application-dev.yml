@@ -16,7 +16,7 @@
 logging:
     level:
         ROOT: DEBUG
-        ru.torgcrm: DEBUG
+        com.idurdyev.torgcrm.jhipster: DEBUG
         io.github.jhipster: DEBUG
 
 spring:
@@ -32,12 +32,15 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:postgresql://localhost:5432/TorgCRMCE
-        username: TorgCRMCE
+        url: jdbc:h2:file:./target/h2db/db/torgcrm;DB_CLOSE_DELAY=-1
+        username: TorgCRM
         password:
+    h2:
+        console:
+            enabled: false
     jpa:
-        database-platform: io.github.jhipster.domain.util.FixedPostgreSQL82Dialect
-        database: POSTGRESQL
+        database-platform: io.github.jhipster.domain.util.FixedH2Dialect
+        database: H2
         show-sql: true
         properties:
             hibernate.id.new_generator_mappings: true
@@ -60,7 +63,7 @@ liquibase:
 
 # ===================================================================
 # To enable SSL, generate a certificate using:
-# keytool -genkey -alias TorgCRMCE -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
+# keytool -genkey -alias TorgCRM -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
 #
 # You can also use Let's Encrypt:
 # https://maximilian-boehm.com/hp2121/Create-a-Java-Keystore-JKS-from-Let-s-Encrypt-Certificates.htm
@@ -73,7 +76,7 @@ liquibase:
 #        key-store: keystore.p12
 #        key-store-password: <your-password>
 #        key-store-type: PKCS12
-#        key-alias: TorgCRMCE
+#        key-alias: TorgCRM
 # ===================================================================
 server:
     port: 8080
@@ -107,7 +110,7 @@ jhipster:
                 token-validity-in-seconds: 86400
                 token-validity-in-seconds-for-remember-me: 2592000
     mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: TorgCRMCE@localhost
+        from: TorgCRM@localhost
         base-url: http://127.0.0.1:8080
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
@@ -115,7 +118,7 @@ jhipster:
             enabled: false
             host: localhost
             port: 2003
-            prefix: TorgCRMCE
+            prefix: TorgCRM
         prometheus: # Use the "prometheus" Maven profile to have the Prometheus dependencies
             enabled: false
             endpoint: /prometheusMetrics

@@ -3,9 +3,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Rx';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { TorgCrmceTestModule } from '../../../test.module';
+import { TorgCrmTestModule } from '../../../test.module';
 import { UserMgmtDialogComponent } from '../../../../../../main/webapp/app/admin/user-management/user-management-dialog.component';
-import { UserService, User, JhiLanguageHelper } from '../../../../../../main/webapp/app/shared';
+import { UserService, User } from '../../../../../../main/webapp/app/shared';
 
 describe('Component Tests', () => {
 
@@ -15,11 +15,10 @@ describe('Component Tests', () => {
         let service: UserService;
         let mockEventManager: any;
         let mockActiveModal: any;
-        let mockLanguageHelper: any;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [TorgCrmceTestModule],
+                imports: [TorgCrmTestModule],
                 declarations: [UserMgmtDialogComponent],
                 providers: [
                     UserService
@@ -35,7 +34,6 @@ describe('Component Tests', () => {
             service = fixture.debugElement.injector.get(UserService);
             mockEventManager = fixture.debugElement.injector.get(JhiEventManager);
             mockActiveModal = fixture.debugElement.injector.get(NgbActiveModal);
-            mockLanguageHelper = fixture.debugElement.injector.get(JhiLanguageHelper);
         });
 
         describe('OnInit', () => {
@@ -51,7 +49,6 @@ describe('Component Tests', () => {
                         // THEN
                         expect(service.authorities).toHaveBeenCalled();
                         expect(comp.authorities).toEqual(['USER']);
-                        expect(mockLanguageHelper.getAllSpy).toHaveBeenCalled();
                     })
                 )
             );

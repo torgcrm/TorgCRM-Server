@@ -30,8 +30,7 @@ export class NotificationInterceptor extends JhiHttpInterceptor {
                 const alertKey = response.headers.get(headers[ 0 ]);
                 if (typeof alertKey === 'string') {
                     if (this.alertService) {
-                        const alertParam = headers.length >= 2 ? response.headers.get(headers[ 1 ]) : null;
-                        this.alertService.success(alertKey, { param : alertParam }, null);
+                        this.alertService.success(alertKey, null, null);
                     }
                 }
             }
