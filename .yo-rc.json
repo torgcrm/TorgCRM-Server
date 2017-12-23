@@ -1,35 +1,33 @@
 {
   "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.idurdyev.torgcrm.jhipster"
+    },
     "jhipsterVersion": "4.13.0",
-    "baseName": "TorgCRM Server",
-    "packageName": "ru.torgcrm",
-    "packageFolder": "ru/torgcrm",
+    "baseName": "TorgCRM",
+    "packageName": "com.idurdyev.torgcrm.jhipster",
+    "packageFolder": "com/idurdyev/torgcrm/jhipster",
     "serverPort": "8080",
     "authenticationType": "jwt",
     "hibernateCache": "ehcache",
     "clusteredHttpSession": false,
     "websocket": false,
     "databaseType": "sql",
-    "devDatabaseType": "postgresql",
+    "devDatabaseType": "h2Disk",
     "prodDatabaseType": "postgresql",
     "searchEngine": false,
     "messageBroker": false,
     "serviceDiscoveryType": false,
     "buildTool": "maven",
     "enableSocialSignIn": false,
-    "jwtSecretKey": "ddfd68c6ab0dbeb3474baa4443d137e15127fa4f",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "71ad4017850dddcfe3a7033729908de8aaaf04d3",
     "clientFramework": "angularX",
     "useSass": true,
     "clientPackageManager": "yarn",
     "applicationType": "monolith",
     "testFrameworks": [],
     "jhiPrefix": "jhi",
-    "enableTranslation": true,
-    "nativeLanguage": "ru",
-    "languages": [
-      "ru",
-      "en"
-    ],
-    "herokuAppName": "torgcrm-developer"
+    "enableTranslation": false
   }
 }
