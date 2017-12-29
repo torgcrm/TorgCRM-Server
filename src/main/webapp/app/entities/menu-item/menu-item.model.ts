@@ -7,7 +7,6 @@ export class MenuItem implements BaseEntity {
         public title?: string,
         public icon?: string,
         public menu?: BaseEntity,
-        public parent?: BaseEntity,
     ) {
     }
 }

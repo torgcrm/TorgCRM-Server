@@ -21,7 +21,6 @@
             <th><span>Title</span></th>
             <th><span>Icon</span></th>
             <th><span>Menu</span></th>
-            <th><span>Parent</span></th>
             <th></th>
             </tr>
             </thead>
@@ -34,11 +33,6 @@
                 <td>
                     <div *ngIf="menuItem.menu">
                         <a [routerLink]="['../menu', menuItem.menu?.id ]" >{{menuItem.menu?.id}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="menuItem.parent">
-                        <a [routerLink]="['../menu', menuItem.parent?.id ]" >{{menuItem.parent?.id}}</a>
                     </div>
                 </td>
                 <td class="text-right">

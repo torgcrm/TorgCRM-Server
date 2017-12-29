@@ -22,12 +22,6 @@
                 <a [routerLink]="['/menu', menuItem.menu?.id]">{{menuItem.menu?.id}}</a>
             </div>
         </dd>
-        <dt><span>Parent</span></dt>
-        <dd>
-            <div *ngIf="menuItem.parent">
-                <a [routerLink]="['/menu', menuItem.parent?.id]">{{menuItem.parent?.id}}</a>
-            </div>
-        </dd>
     </dl>
 
     <button type="submit"

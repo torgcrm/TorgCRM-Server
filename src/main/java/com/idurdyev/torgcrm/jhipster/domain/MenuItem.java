@@ -35,9 +35,6 @@ public class MenuItem implements Serializable {
     @ManyToOne
     private Menu menu;
 
-    @ManyToOne
-    private Menu parent;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -97,19 +94,6 @@ public class MenuItem implements Serializable {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
-    }
-
-    public Menu getParent() {
-        return parent;
-    }
-
-    public MenuItem parent(Menu menu) {
-        this.parent = menu;
-        return this;
-    }
-
-    public void setParent(Menu menu) {
-        this.parent = menu;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

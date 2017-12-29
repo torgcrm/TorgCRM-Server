@@ -35,13 +35,6 @@
                 <option [ngValue]="menuOption.id === menuItem.menu?.id ? menuItem.menu : menuOption" *ngFor="let menuOption of menus; trackBy: trackMenuById">{{menuOption.id}}</option>
             </select>
         </div>
-        <div class="form-group">
-            <label class="form-control-label" for="field_parent">Parent</label>
-            <select class="form-control" id="field_parent" name="parent" [(ngModel)]="menuItem.parent" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="menuOption.id === menuItem.parent?.id ? menuItem.parent : menuOption" *ngFor="let menuOption of menus; trackBy: trackMenuById">{{menuOption.id}}</option>
-            </select>
-        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
