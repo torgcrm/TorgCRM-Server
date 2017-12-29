@@ -41,6 +41,17 @@ public class CacheConfiguration {
             cm.createCache(com.idurdyev.torgcrm.jhipster.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(com.idurdyev.torgcrm.jhipster.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(com.idurdyev.torgcrm.jhipster.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(com.idurdyev.torgcrm.jhipster.domain.Project.class.getName(), jcacheConfiguration);
+            cm.createCache(com.idurdyev.torgcrm.jhipster.domain.Customer.class.getName(), jcacheConfiguration);
+            cm.createCache(com.idurdyev.torgcrm.jhipster.domain.Customer.class.getName() + ".projects", jcacheConfiguration);
+            cm.createCache(com.idurdyev.torgcrm.jhipster.domain.Customer.class.getName() + ".deals", jcacheConfiguration);
+            cm.createCache(com.idurdyev.torgcrm.jhipster.domain.Employee.class.getName(), jcacheConfiguration);
+            cm.createCache(com.idurdyev.torgcrm.jhipster.domain.Department.class.getName(), jcacheConfiguration);
+            cm.createCache(com.idurdyev.torgcrm.jhipster.domain.Deal.class.getName(), jcacheConfiguration);
+            cm.createCache(com.idurdyev.torgcrm.jhipster.domain.Task.class.getName(), jcacheConfiguration);
+            cm.createCache(com.idurdyev.torgcrm.jhipster.domain.Menu.class.getName(), jcacheConfiguration);
+            cm.createCache(com.idurdyev.torgcrm.jhipster.domain.MenuItem.class.getName(), jcacheConfiguration);
+            cm.createCache(com.idurdyev.torgcrm.jhipster.domain.Menu.class.getName() + ".items", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }
