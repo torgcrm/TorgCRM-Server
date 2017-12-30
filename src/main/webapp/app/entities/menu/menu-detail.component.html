@@ -14,8 +14,8 @@
         </dd>
         <dt><span>Parent</span></dt>
         <dd>
-            <div *ngIf="menu.parent">
-                <a [routerLink]="['/menu', menu.parent?.id]">{{menu.parent?.id}}</a>
+            <div *ngIf="menu.parentId">
+                <a [routerLink]="['/menu', menu.parentId]">{{menu.parentId}}</a>
             </div>
         </dd>
     </dl>

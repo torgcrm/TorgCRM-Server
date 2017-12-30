@@ -35,11 +35,11 @@ export class MenuDialogComponent implements OnInit {
         this.menuService
             .query({filter: 'menu-is-null'})
             .subscribe((res: ResponseWrapper) => {
-                if (!this.menu.parent || !this.menu.parent.id) {
+                if (!this.menu.parentId) {
                     this.parents = res.json;
                 } else {
                     this.menuService
-                        .find(this.menu.parent.id)
+                        .find(this.menu.parentId)
                         .subscribe((subRes: Menu) => {
                             this.parents = [subRes].concat(res.json);
                         }, (subRes: ResponseWrapper) => this.onError(subRes.json));

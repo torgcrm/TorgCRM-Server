@@ -7,16 +7,10 @@
         Added the constraints for entity MenuItem.
     -->
     <changeSet id="20171229194815-2" author="jhipster">
-
+        
         <addForeignKeyConstraint baseColumnNames="menu_id"
                                  baseTableName="menu_item"
                                  constraintName="fk_menu_item_menu_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="menu"/>
-
-        <addForeignKeyConstraint baseColumnNames="menu_id"
-                                 baseTableName="menu_item"
-                                 constraintName="fk_menu_item_parent_id"
                                  referencedColumnNames="id"
                                  referencedTableName="menu"/>
 

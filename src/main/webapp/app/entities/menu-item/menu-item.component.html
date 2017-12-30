@@ -31,8 +31,8 @@
                 <td>{{menuItem.title}}</td>
                 <td>{{menuItem.icon}}</td>
                 <td>
-                    <div *ngIf="menuItem.menu">
-                        <a [routerLink]="['../menu', menuItem.menu?.id ]" >{{menuItem.menu?.id}}</a>
+                    <div *ngIf="menuItem.menuId">
+                        <a [routerLink]="['../menu', menuItem.menuId  ]" >{{menuItem.menuId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

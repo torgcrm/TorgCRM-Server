@@ -30,9 +30,9 @@
 
         <div class="form-group">
             <label class="form-control-label" for="field_menu">Menu</label>
-            <select class="form-control" id="field_menu" name="menu" [(ngModel)]="menuItem.menu" >
+            <select class="form-control" id="field_menu" name="menu" [(ngModel)]="menuItem.menuId" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="menuOption.id === menuItem.menu?.id ? menuItem.menu : menuOption" *ngFor="let menuOption of menus; trackBy: trackMenuById">{{menuOption.id}}</option>
+                <option [ngValue]="menuOption.id" *ngFor="let menuOption of menus; trackBy: trackMenuById">{{menuOption.id}}</option>
             </select>
         </div>
     </div>

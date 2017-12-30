@@ -4,6 +4,9 @@ import com.idurdyev.torgcrm.jhipster.TorgCrmApp;
 
 import com.idurdyev.torgcrm.jhipster.domain.Menu;
 import com.idurdyev.torgcrm.jhipster.repository.MenuRepository;
+import com.idurdyev.torgcrm.jhipster.service.MenuService;
+import com.idurdyev.torgcrm.jhipster.service.dto.MenuDTO;
+import com.idurdyev.torgcrm.jhipster.service.mapper.MenuMapper;
 import com.idurdyev.torgcrm.jhipster.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -48,6 +51,12 @@ public class MenuResourceIntTest {
     private MenuRepository menuRepository;
 
     @Autowired
+    private MenuMapper menuMapper;
+
+    @Autowired
+    private MenuService menuService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -66,7 +75,7 @@ public class MenuResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final MenuResource menuResource = new MenuResource(menuRepository);
+        final MenuResource menuResource = new MenuResource(menuService);
         this.restMenuMockMvc = MockMvcBuilders.standaloneSetup(menuResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -98,9 +107,10 @@ public class MenuResourceIntTest {
         int databaseSizeBeforeCreate = menuRepository.findAll().size();
 
         // Create the Menu
+        MenuDTO menuDTO = menuMapper.toDto(menu);
         restMenuMockMvc.perform(post("/api/menus")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(menu)))
+            .content(TestUtil.convertObjectToJsonBytes(menuDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Menu in the database
@@ -118,11 +128,12 @@ public class MenuResourceIntTest {
 
         // Create the Menu with an existing ID
         menu.setId(1L);
+        MenuDTO menuDTO = menuMapper.toDto(menu);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restMenuMockMvc.perform(post("/api/menus")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(menu)))
+            .content(TestUtil.convertObjectToJsonBytes(menuDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Menu in the database
@@ -182,10 +193,11 @@ public class MenuResourceIntTest {
         updatedMenu
             .code(UPDATED_CODE)
             .title(UPDATED_TITLE);
+        MenuDTO menuDTO = menuMapper.toDto(updatedMenu);
 
         restMenuMockMvc.perform(put("/api/menus")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedMenu)))
+            .content(TestUtil.convertObjectToJsonBytes(menuDTO)))
             .andExpect(status().isOk());
 
         // Validate the Menu in the database
@@ -202,11 +214,12 @@ public class MenuResourceIntTest {
         int databaseSizeBeforeUpdate = menuRepository.findAll().size();
 
         // Create the Menu
+        MenuDTO menuDTO = menuMapper.toDto(menu);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restMenuMockMvc.perform(put("/api/menus")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(menu)))
+            .content(TestUtil.convertObjectToJsonBytes(menuDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Menu in the database
@@ -244,5 +257,28 @@ public class MenuResourceIntTest {
         assertThat(menu1).isNotEqualTo(menu2);
         menu1.setId(null);
         assertThat(menu1).isNotEqualTo(menu2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(MenuDTO.class);
+        MenuDTO menuDTO1 = new MenuDTO();
+        menuDTO1.setId(1L);
+        MenuDTO menuDTO2 = new MenuDTO();
+        assertThat(menuDTO1).isNotEqualTo(menuDTO2);
+        menuDTO2.setId(menuDTO1.getId());
+        assertThat(menuDTO1).isEqualTo(menuDTO2);
+        menuDTO2.setId(2L);
+        assertThat(menuDTO1).isNotEqualTo(menuDTO2);
+        menuDTO1.setId(null);
+        assertThat(menuDTO1).isNotEqualTo(menuDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(menuMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(menuMapper.fromId(null)).isNull();
     }
 }

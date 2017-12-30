@@ -25,9 +25,9 @@
 
         <div class="form-group">
             <label class="form-control-label" for="field_parent">Parent</label>
-            <select class="form-control" id="field_parent" name="parent" [(ngModel)]="menu.parent">
+            <select class="form-control" id="field_parent" name="parent" [(ngModel)]="menu.parentId">
                 <option [ngValue]="null"></option>
-                <option [ngValue]="menuOption.id === menu.parent?.id ? menu.parent : menuOption" *ngFor="let menuOption of parents; trackBy: trackMenuById">{{menuOption.id}}</option>
+                <option [ngValue]="menuOption.id" *ngFor="let menuOption of parents; trackBy: trackMenuById">{{menuOption.id}}</option>
             </select>
         </div>
     </div>

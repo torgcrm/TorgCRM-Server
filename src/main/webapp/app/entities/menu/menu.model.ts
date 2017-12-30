@@ -5,7 +5,7 @@ export class Menu implements BaseEntity {
         public id?: number,
         public code?: string,
         public title?: string,
-        public parent?: BaseEntity,
+        public parentId?: number,
         public items?: BaseEntity[],
     ) {
     }

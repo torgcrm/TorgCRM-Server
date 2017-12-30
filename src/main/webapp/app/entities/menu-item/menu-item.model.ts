@@ -6,7 +6,7 @@ export class MenuItem implements BaseEntity {
         public code?: string,
         public title?: string,
         public icon?: string,
-        public menu?: BaseEntity,
+        public menuId?: number,
     ) {
     }
 }

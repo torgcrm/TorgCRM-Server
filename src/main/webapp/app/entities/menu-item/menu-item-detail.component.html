@@ -18,8 +18,8 @@
         </dd>
         <dt><span>Menu</span></dt>
         <dd>
-            <div *ngIf="menuItem.menu">
-                <a [routerLink]="['/menu', menuItem.menu?.id]">{{menuItem.menu?.id}}</a>
+            <div *ngIf="menuItem.menuId">
+                <a [routerLink]="['/menu', menuItem.menuId]">{{menuItem.menuId}}</a>
             </div>
         </dd>
     </dl>

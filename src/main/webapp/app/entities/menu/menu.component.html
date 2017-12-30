@@ -29,8 +29,8 @@
                 <td>{{menu.code}}</td>
                 <td>{{menu.title}}</td>
                 <td>
-                    <div *ngIf="menu.parent">
-                        <a [routerLink]="['../menu', menu.parent?.id ]" >{{menu.parent?.id}}</a>
+                    <div *ngIf="menu.parentId">
+                        <a [routerLink]="['../menu', menu.parentId  ]" >{{menu.parentId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

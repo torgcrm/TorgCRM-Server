@@ -36,7 +36,7 @@ public class Menu implements Serializable {
     @JoinColumn(unique = true)
     private Menu parent;
 
-    @OneToMany(mappedBy = "menu")
+    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<MenuItem> items = new HashSet<>();
