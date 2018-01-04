@@ -2,6 +2,14 @@
     "fluentMethods": true,
     "relationships": [
         {
+            "relationshipType": "one-to-one",
+            "relationshipName": "type",
+            "otherEntityName": "customerType",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "customer"
+        },
+        {
             "relationshipType": "one-to-many",
             "relationshipName": "projects",
             "otherEntityName": "project",
@@ -16,15 +24,11 @@
     ],
     "fields": [
         {
-            "fieldName": "title",
+            "fieldName": "fullname",
             "fieldType": "String"
         },
         {
-            "fieldName": "companyName",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "phone",
+            "fieldName": "phoneNumber",
             "fieldType": "String"
         },
         {
@@ -32,7 +36,11 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "position",
+            "fieldName": "fax",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "source",
             "fieldType": "String"
         },
         {

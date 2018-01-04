@@ -38,20 +38,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = TorgCrmApp.class)
 public class CustomerResourceIntTest {
 
-    private static final String DEFAULT_TITLE = "AAAAAAAAAA";
-    private static final String UPDATED_TITLE = "BBBBBBBBBB";
+    private static final String DEFAULT_FULLNAME = "AAAAAAAAAA";
+    private static final String UPDATED_FULLNAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_COMPANY_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_COMPANY_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_PHONE = "AAAAAAAAAA";
-    private static final String UPDATED_PHONE = "BBBBBBBBBB";
+    private static final String DEFAULT_PHONE_NUMBER = "AAAAAAAAAA";
+    private static final String UPDATED_PHONE_NUMBER = "BBBBBBBBBB";
 
     private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL = "BBBBBBBBBB";
 
-    private static final String DEFAULT_POSITION = "AAAAAAAAAA";
-    private static final String UPDATED_POSITION = "BBBBBBBBBB";
+    private static final String DEFAULT_FAX = "AAAAAAAAAA";
+    private static final String UPDATED_FAX = "BBBBBBBBBB";
+
+    private static final String DEFAULT_SOURCE = "AAAAAAAAAA";
+    private static final String UPDATED_SOURCE = "BBBBBBBBBB";
 
     private static final String DEFAULT_COMMENT = "AAAAAAAAAA";
     private static final String UPDATED_COMMENT = "BBBBBBBBBB";
@@ -94,11 +94,11 @@ public class CustomerResourceIntTest {
      */
     public static Customer createEntity(EntityManager em) {
         Customer customer = new Customer()
-            .title(DEFAULT_TITLE)
-            .companyName(DEFAULT_COMPANY_NAME)
-            .phone(DEFAULT_PHONE)
+            .fullname(DEFAULT_FULLNAME)
+            .phoneNumber(DEFAULT_PHONE_NUMBER)
             .email(DEFAULT_EMAIL)
-            .position(DEFAULT_POSITION)
+            .fax(DEFAULT_FAX)
+            .source(DEFAULT_SOURCE)
             .comment(DEFAULT_COMMENT);
         return customer;
     }
@@ -123,11 +123,11 @@ public class CustomerResourceIntTest {
         List<Customer> customerList = customerRepository.findAll();
         assertThat(customerList).hasSize(databaseSizeBeforeCreate + 1);
         Customer testCustomer = customerList.get(customerList.size() - 1);
-        assertThat(testCustomer.getTitle()).isEqualTo(DEFAULT_TITLE);
-        assertThat(testCustomer.getCompanyName()).isEqualTo(DEFAULT_COMPANY_NAME);
-        assertThat(testCustomer.getPhone()).isEqualTo(DEFAULT_PHONE);
+        assertThat(testCustomer.getFullname()).isEqualTo(DEFAULT_FULLNAME);
+        assertThat(testCustomer.getPhoneNumber()).isEqualTo(DEFAULT_PHONE_NUMBER);
         assertThat(testCustomer.getEmail()).isEqualTo(DEFAULT_EMAIL);
-        assertThat(testCustomer.getPosition()).isEqualTo(DEFAULT_POSITION);
+        assertThat(testCustomer.getFax()).isEqualTo(DEFAULT_FAX);
+        assertThat(testCustomer.getSource()).isEqualTo(DEFAULT_SOURCE);
         assertThat(testCustomer.getComment()).isEqualTo(DEFAULT_COMMENT);
     }
 
@@ -161,11 +161,11 @@ public class CustomerResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(customer.getId().intValue())))
-            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
-            .andExpect(jsonPath("$.[*].companyName").value(hasItem(DEFAULT_COMPANY_NAME.toString())))
-            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE.toString())))
+            .andExpect(jsonPath("$.[*].fullname").value(hasItem(DEFAULT_FULLNAME.toString())))
+            .andExpect(jsonPath("$.[*].phoneNumber").value(hasItem(DEFAULT_PHONE_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
-            .andExpect(jsonPath("$.[*].position").value(hasItem(DEFAULT_POSITION.toString())))
+            .andExpect(jsonPath("$.[*].fax").value(hasItem(DEFAULT_FAX.toString())))
+            .andExpect(jsonPath("$.[*].source").value(hasItem(DEFAULT_SOURCE.toString())))
             .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT.toString())));
     }
 
@@ -180,11 +180,11 @@ public class CustomerResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(customer.getId().intValue()))
-            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
-            .andExpect(jsonPath("$.companyName").value(DEFAULT_COMPANY_NAME.toString()))
-            .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE.toString()))
+            .andExpect(jsonPath("$.fullname").value(DEFAULT_FULLNAME.toString()))
+            .andExpect(jsonPath("$.phoneNumber").value(DEFAULT_PHONE_NUMBER.toString()))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
-            .andExpect(jsonPath("$.position").value(DEFAULT_POSITION.toString()))
+            .andExpect(jsonPath("$.fax").value(DEFAULT_FAX.toString()))
+            .andExpect(jsonPath("$.source").value(DEFAULT_SOURCE.toString()))
             .andExpect(jsonPath("$.comment").value(DEFAULT_COMMENT.toString()));
     }
 
@@ -208,11 +208,11 @@ public class CustomerResourceIntTest {
         // Disconnect from session so that the updates on updatedCustomer are not directly saved in db
         em.detach(updatedCustomer);
         updatedCustomer
-            .title(UPDATED_TITLE)
-            .companyName(UPDATED_COMPANY_NAME)
-            .phone(UPDATED_PHONE)
+            .fullname(UPDATED_FULLNAME)
+            .phoneNumber(UPDATED_PHONE_NUMBER)
             .email(UPDATED_EMAIL)
-            .position(UPDATED_POSITION)
+            .fax(UPDATED_FAX)
+            .source(UPDATED_SOURCE)
             .comment(UPDATED_COMMENT);
 
         restCustomerMockMvc.perform(put("/api/customers")
@@ -224,11 +224,11 @@ public class CustomerResourceIntTest {
         List<Customer> customerList = customerRepository.findAll();
         assertThat(customerList).hasSize(databaseSizeBeforeUpdate);
         Customer testCustomer = customerList.get(customerList.size() - 1);
-        assertThat(testCustomer.getTitle()).isEqualTo(UPDATED_TITLE);
-        assertThat(testCustomer.getCompanyName()).isEqualTo(UPDATED_COMPANY_NAME);
-        assertThat(testCustomer.getPhone()).isEqualTo(UPDATED_PHONE);
+        assertThat(testCustomer.getFullname()).isEqualTo(UPDATED_FULLNAME);
+        assertThat(testCustomer.getPhoneNumber()).isEqualTo(UPDATED_PHONE_NUMBER);
         assertThat(testCustomer.getEmail()).isEqualTo(UPDATED_EMAIL);
-        assertThat(testCustomer.getPosition()).isEqualTo(UPDATED_POSITION);
+        assertThat(testCustomer.getFax()).isEqualTo(UPDATED_FAX);
+        assertThat(testCustomer.getSource()).isEqualTo(UPDATED_SOURCE);
         assertThat(testCustomer.getComment()).isEqualTo(UPDATED_COMMENT);
     }
 

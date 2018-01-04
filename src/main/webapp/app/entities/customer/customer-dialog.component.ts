@@ -4,11 +4,13 @@ import { Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Customer } from './customer.model';
 import { CustomerPopupService } from './customer-popup.service';
 import { CustomerService } from './customer.service';
+import { CustomerType, CustomerTypeService } from '../customer-type';
+import { ResponseWrapper } from '../../shared';
 
 @Component({
     selector: 'jhi-customer-dialog',
@@ -19,15 +21,32 @@ export class CustomerDialogComponent implements OnInit {
     customer: Customer;
     isSaving: boolean;
 
+    types: CustomerType[];
+
     constructor(
         public activeModal: NgbActiveModal,
+        private jhiAlertService: JhiAlertService,
         private customerService: CustomerService,
+        private customerTypeService: CustomerTypeService,
         private eventManager: JhiEventManager
     ) {
     }
 
     ngOnInit() {
         this.isSaving = false;
+        this.customerTypeService
+            .query({filter: 'customer-is-null'})
+            .subscribe((res: ResponseWrapper) => {
+                if (!this.customer.type || !this.customer.type.id) {
+                    this.types = res.json;
+                } else {
+                    this.customerTypeService
+                        .find(this.customer.type.id)
+                        .subscribe((subRes: CustomerType) => {
+                            this.types = [subRes].concat(res.json);
+                        }, (subRes: ResponseWrapper) => this.onError(subRes.json));
+                }
+            }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -58,6 +77,14 @@ export class CustomerDialogComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
+    }
+
+    private onError(error: any) {
+        this.jhiAlertService.error(error.message, null, null);
+    }
+
+    trackCustomerTypeById(index: number, item: CustomerType) {
+        return item.id;
     }
 }
 

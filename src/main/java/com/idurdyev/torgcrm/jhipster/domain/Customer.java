@@ -26,23 +26,27 @@ public class Customer implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "fullname")
+    private String fullname;
 
-    @Column(name = "company_name")
-    private String companyName;
-
-    @Column(name = "phone")
-    private String phone;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     @Column(name = "email")
     private String email;
 
-    @Column(name = "position")
-    private String position;
+    @Column(name = "fax")
+    private String fax;
+
+    @Column(name = "source")
+    private String source;
 
     @Column(name = "jhi_comment")
     private String comment;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private CustomerType type;
 
     @OneToMany(mappedBy = "customer")
     @JsonIgnore
@@ -63,43 +67,30 @@ public class Customer implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getFullname() {
+        return fullname;
     }
 
-    public Customer title(String title) {
-        this.title = title;
+    public Customer fullname(String fullname) {
+        this.fullname = fullname;
         return this;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public Customer companyName(String companyName) {
-        this.companyName = companyName;
+    public Customer phoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
         return this;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public Customer phone(String phone) {
-        this.phone = phone;
-        return this;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
@@ -115,17 +106,30 @@ public class Customer implements Serializable {
         this.email = email;
     }
 
-    public String getPosition() {
-        return position;
+    public String getFax() {
+        return fax;
     }
 
-    public Customer position(String position) {
-        this.position = position;
+    public Customer fax(String fax) {
+        this.fax = fax;
         return this;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public Customer source(String source) {
+        this.source = source;
+        return this;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public String getComment() {
@@ -139,6 +143,19 @@ public class Customer implements Serializable {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public CustomerType getType() {
+        return type;
+    }
+
+    public Customer type(CustomerType customerType) {
+        this.type = customerType;
+        return this;
+    }
+
+    public void setType(CustomerType customerType) {
+        this.type = customerType;
     }
 
     public Set<Project> getProjects() {
@@ -216,11 +233,11 @@ public class Customer implements Serializable {
     public String toString() {
         return "Customer{" +
             "id=" + getId() +
-            ", title='" + getTitle() + "'" +
-            ", companyName='" + getCompanyName() + "'" +
-            ", phone='" + getPhone() + "'" +
+            ", fullname='" + getFullname() + "'" +
+            ", phoneNumber='" + getPhoneNumber() + "'" +
             ", email='" + getEmail() + "'" +
-            ", position='" + getPosition() + "'" +
+            ", fax='" + getFax() + "'" +
+            ", source='" + getSource() + "'" +
             ", comment='" + getComment() + "'" +
             "}";
     }

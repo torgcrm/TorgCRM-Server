@@ -1,0 +1,79 @@
+entity Project {
+	name String
+    industry String
+    code String
+}
+
+entity CustomerType {
+	code String
+    value String
+}
+
+entity Customer {
+	fullname String
+    phoneNumber String
+    email String
+    fax String
+    source String
+    comment String
+}
+
+entity Employee {
+	firstName String
+    lastName String
+    secondName String
+	fullName String
+    position String
+}
+
+entity Department {
+	title String
+}
+
+entity Deal {
+	title String
+}
+
+entity Task {
+	title String
+    type TaskType
+}
+
+entity Menu {
+	code String
+    title String
+}
+
+entity MenuItem {
+	code String
+    title String
+    icon String
+}
+
+enum TaskType {
+	CALL, MEETING, EMAIL
+}
+
+relationship OneToOne {
+	Customer{type} to CustomerType
+}
+
+relationship OneToOne {
+	Menu{parent} to Menu
+}
+
+relationship OneToMany {
+	Menu{items} to MenuItem
+}
+
+relationship OneToMany {
+	Customer{projects} to Project
+}
+
+relationship OneToMany {
+	Customer{deals} to Deal
+}
+
+relationship OneToOne {
+	Employee{department} to Department
+}

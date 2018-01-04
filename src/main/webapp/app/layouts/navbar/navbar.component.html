@@ -77,6 +77,12 @@
                             <span>Menu Item</span>
                         </a>
                     </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="customer-type" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                            <span>Customer Type</span>
+                        </a>
+                    </li>
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                 </ul>
             </li>
