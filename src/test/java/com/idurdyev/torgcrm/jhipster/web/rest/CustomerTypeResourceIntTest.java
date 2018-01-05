@@ -4,6 +4,9 @@ import com.idurdyev.torgcrm.jhipster.TorgCrmApp;
 
 import com.idurdyev.torgcrm.jhipster.domain.CustomerType;
 import com.idurdyev.torgcrm.jhipster.repository.CustomerTypeRepository;
+import com.idurdyev.torgcrm.jhipster.service.CustomerTypeService;
+import com.idurdyev.torgcrm.jhipster.service.dto.CustomerTypeDTO;
+import com.idurdyev.torgcrm.jhipster.service.mapper.CustomerTypeMapper;
 import com.idurdyev.torgcrm.jhipster.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -48,6 +51,12 @@ public class CustomerTypeResourceIntTest {
     private CustomerTypeRepository customerTypeRepository;
 
     @Autowired
+    private CustomerTypeMapper customerTypeMapper;
+
+    @Autowired
+    private CustomerTypeService customerTypeService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -66,7 +75,7 @@ public class CustomerTypeResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CustomerTypeResource customerTypeResource = new CustomerTypeResource(customerTypeRepository);
+        final CustomerTypeResource customerTypeResource = new CustomerTypeResource(customerTypeService);
         this.restCustomerTypeMockMvc = MockMvcBuilders.standaloneSetup(customerTypeResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -98,9 +107,10 @@ public class CustomerTypeResourceIntTest {
         int databaseSizeBeforeCreate = customerTypeRepository.findAll().size();
 
         // Create the CustomerType
+        CustomerTypeDTO customerTypeDTO = customerTypeMapper.toDto(customerType);
         restCustomerTypeMockMvc.perform(post("/api/customer-types")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(customerType)))
+            .content(TestUtil.convertObjectToJsonBytes(customerTypeDTO)))
             .andExpect(status().isCreated());
 
         // Validate the CustomerType in the database
@@ -118,11 +128,12 @@ public class CustomerTypeResourceIntTest {
 
         // Create the CustomerType with an existing ID
         customerType.setId(1L);
+        CustomerTypeDTO customerTypeDTO = customerTypeMapper.toDto(customerType);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restCustomerTypeMockMvc.perform(post("/api/customer-types")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(customerType)))
+            .content(TestUtil.convertObjectToJsonBytes(customerTypeDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the CustomerType in the database
@@ -182,10 +193,11 @@ public class CustomerTypeResourceIntTest {
         updatedCustomerType
             .code(UPDATED_CODE)
             .value(UPDATED_VALUE);
+        CustomerTypeDTO customerTypeDTO = customerTypeMapper.toDto(updatedCustomerType);
 
         restCustomerTypeMockMvc.perform(put("/api/customer-types")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedCustomerType)))
+            .content(TestUtil.convertObjectToJsonBytes(customerTypeDTO)))
             .andExpect(status().isOk());
 
         // Validate the CustomerType in the database
@@ -202,11 +214,12 @@ public class CustomerTypeResourceIntTest {
         int databaseSizeBeforeUpdate = customerTypeRepository.findAll().size();
 
         // Create the CustomerType
+        CustomerTypeDTO customerTypeDTO = customerTypeMapper.toDto(customerType);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restCustomerTypeMockMvc.perform(put("/api/customer-types")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(customerType)))
+            .content(TestUtil.convertObjectToJsonBytes(customerTypeDTO)))
             .andExpect(status().isCreated());
 
         // Validate the CustomerType in the database
@@ -244,5 +257,28 @@ public class CustomerTypeResourceIntTest {
         assertThat(customerType1).isNotEqualTo(customerType2);
         customerType1.setId(null);
         assertThat(customerType1).isNotEqualTo(customerType2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(CustomerTypeDTO.class);
+        CustomerTypeDTO customerTypeDTO1 = new CustomerTypeDTO();
+        customerTypeDTO1.setId(1L);
+        CustomerTypeDTO customerTypeDTO2 = new CustomerTypeDTO();
+        assertThat(customerTypeDTO1).isNotEqualTo(customerTypeDTO2);
+        customerTypeDTO2.setId(customerTypeDTO1.getId());
+        assertThat(customerTypeDTO1).isEqualTo(customerTypeDTO2);
+        customerTypeDTO2.setId(2L);
+        assertThat(customerTypeDTO1).isNotEqualTo(customerTypeDTO2);
+        customerTypeDTO1.setId(null);
+        assertThat(customerTypeDTO1).isNotEqualTo(customerTypeDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(customerTypeMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(customerTypeMapper.fromId(null)).isNull();
     }
 }

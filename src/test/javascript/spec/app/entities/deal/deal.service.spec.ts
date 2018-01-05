@@ -6,6 +6,7 @@ import { JhiDateUtils } from 'ng-jhipster';
 
 import { DealService } from '../../../../../../main/webapp/app/entities/deal/deal.service';
 import { Deal } from '../../../../../../main/webapp/app/entities/deal/deal.model';
+import { SERVER_API_URL } from '../../../../../../main/webapp/app/app.constants';
 
 describe('Service Tests', () => {
 
@@ -42,7 +43,9 @@ describe('Service Tests', () => {
                 service.find(123).subscribe(() => {});
 
                 expect(this.lastConnection).toBeDefined();
-                expect(this.lastConnection.request.url).toEqual('api/deals/' + 123);
+
+                const resourceUrl = SERVER_API_URL + 'api/deals';
+                expect(this.lastConnection.request.url).toEqual(resourceUrl + '/' + 123);
             });
             it('should return Deal', () => {
 

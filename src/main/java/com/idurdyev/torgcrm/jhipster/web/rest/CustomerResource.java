@@ -1,11 +1,10 @@
 package com.idurdyev.torgcrm.jhipster.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.idurdyev.torgcrm.jhipster.domain.Customer;
-
-import com.idurdyev.torgcrm.jhipster.repository.CustomerRepository;
+import com.idurdyev.torgcrm.jhipster.service.CustomerService;
 import com.idurdyev.torgcrm.jhipster.web.rest.errors.BadRequestAlertException;
 import com.idurdyev.torgcrm.jhipster.web.rest.util.HeaderUtil;
+import com.idurdyev.torgcrm.jhipster.service.dto.CustomerDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,27 +28,27 @@ public class CustomerResource {
 
     private static final String ENTITY_NAME = "customer";
 
-    private final CustomerRepository customerRepository;
+    private final CustomerService customerService;
 
-    public CustomerResource(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    public CustomerResource(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     /**
      * POST  /customers : Create a new customer.
      *
-     * @param customer the customer to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new customer, or with status 400 (Bad Request) if the customer has already an ID
+     * @param customerDTO the customerDTO to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new customerDTO, or with status 400 (Bad Request) if the customer has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/customers")
     @Timed
-    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) throws URISyntaxException {
-        log.debug("REST request to save Customer : {}", customer);
-        if (customer.getId() != null) {
+    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) throws URISyntaxException {
+        log.debug("REST request to save Customer : {}", customerDTO);
+        if (customerDTO.getId() != null) {
             throw new BadRequestAlertException("A new customer cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Customer result = customerRepository.save(customer);
+        CustomerDTO result = customerService.save(customerDTO);
         return ResponseEntity.created(new URI("/api/customers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -58,22 +57,22 @@ public class CustomerResource {
     /**
      * PUT  /customers : Updates an existing customer.
      *
-     * @param customer the customer to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated customer,
-     * or with status 400 (Bad Request) if the customer is not valid,
-     * or with status 500 (Internal Server Error) if the customer couldn't be updated
+     * @param customerDTO the customerDTO to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated customerDTO,
+     * or with status 400 (Bad Request) if the customerDTO is not valid,
+     * or with status 500 (Internal Server Error) if the customerDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/customers")
     @Timed
-    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) throws URISyntaxException {
-        log.debug("REST request to update Customer : {}", customer);
-        if (customer.getId() == null) {
-            return createCustomer(customer);
+    public ResponseEntity<CustomerDTO> updateCustomer(@RequestBody CustomerDTO customerDTO) throws URISyntaxException {
+        log.debug("REST request to update Customer : {}", customerDTO);
+        if (customerDTO.getId() == null) {
+            return createCustomer(customerDTO);
         }
-        Customer result = customerRepository.save(customer);
+        CustomerDTO result = customerService.save(customerDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, customer.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, customerDTO.getId().toString()))
             .body(result);
     }
 
@@ -84,36 +83,36 @@ public class CustomerResource {
      */
     @GetMapping("/customers")
     @Timed
-    public List<Customer> getAllCustomers() {
+    public List<CustomerDTO> getAllCustomers() {
         log.debug("REST request to get all Customers");
-        return customerRepository.findAll();
+        return customerService.findAll();
         }
 
     /**
      * GET  /customers/:id : get the "id" customer.
      *
-     * @param id the id of the customer to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the customer, or with status 404 (Not Found)
+     * @param id the id of the customerDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the customerDTO, or with status 404 (Not Found)
      */
     @GetMapping("/customers/{id}")
     @Timed
-    public ResponseEntity<Customer> getCustomer(@PathVariable Long id) {
+    public ResponseEntity<CustomerDTO> getCustomer(@PathVariable Long id) {
         log.debug("REST request to get Customer : {}", id);
-        Customer customer = customerRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(customer));
+        CustomerDTO customerDTO = customerService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(customerDTO));
     }
 
     /**
      * DELETE  /customers/:id : delete the "id" customer.
      *
-     * @param id the id of the customer to delete
+     * @param id the id of the customerDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/customers/{id}")
     @Timed
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
         log.debug("REST request to delete Customer : {}", id);
-        customerRepository.delete(id);
+        customerService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

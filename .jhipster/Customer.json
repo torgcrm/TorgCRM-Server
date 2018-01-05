@@ -50,8 +50,8 @@
     ],
     "changelogDate": "20171229194809",
     "entityTableName": "customer",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "no",
-    "service": "no",
+    "service": "serviceImpl",
     "jpaMetamodelFiltering": false
 }

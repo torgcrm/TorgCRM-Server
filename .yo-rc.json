@@ -3,7 +3,7 @@
     "promptValues": {
       "packageName": "com.idurdyev.torgcrm.jhipster"
     },
-    "jhipsterVersion": "4.13.0",
+    "jhipsterVersion": "4.13.2",
     "baseName": "TorgCRM",
     "packageName": "com.idurdyev.torgcrm.jhipster",
     "packageFolder": "com/idurdyev/torgcrm/jhipster",
@@ -28,6 +28,8 @@
     "applicationType": "monolith",
     "testFrameworks": [],
     "jhiPrefix": "jhi",
-    "enableTranslation": false
+    "enableTranslation": false,
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true
   }
 }

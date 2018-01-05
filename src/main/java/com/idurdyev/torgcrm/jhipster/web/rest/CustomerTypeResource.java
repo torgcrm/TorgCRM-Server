@@ -1,11 +1,10 @@
 package com.idurdyev.torgcrm.jhipster.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.idurdyev.torgcrm.jhipster.domain.CustomerType;
-
-import com.idurdyev.torgcrm.jhipster.repository.CustomerTypeRepository;
+import com.idurdyev.torgcrm.jhipster.service.CustomerTypeService;
 import com.idurdyev.torgcrm.jhipster.web.rest.errors.BadRequestAlertException;
 import com.idurdyev.torgcrm.jhipster.web.rest.util.HeaderUtil;
+import com.idurdyev.torgcrm.jhipster.service.dto.CustomerTypeDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,27 +28,27 @@ public class CustomerTypeResource {
 
     private static final String ENTITY_NAME = "customerType";
 
-    private final CustomerTypeRepository customerTypeRepository;
+    private final CustomerTypeService customerTypeService;
 
-    public CustomerTypeResource(CustomerTypeRepository customerTypeRepository) {
-        this.customerTypeRepository = customerTypeRepository;
+    public CustomerTypeResource(CustomerTypeService customerTypeService) {
+        this.customerTypeService = customerTypeService;
     }
 
     /**
      * POST  /customer-types : Create a new customerType.
      *
-     * @param customerType the customerType to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new customerType, or with status 400 (Bad Request) if the customerType has already an ID
+     * @param customerTypeDTO the customerTypeDTO to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new customerTypeDTO, or with status 400 (Bad Request) if the customerType has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/customer-types")
     @Timed
-    public ResponseEntity<CustomerType> createCustomerType(@RequestBody CustomerType customerType) throws URISyntaxException {
-        log.debug("REST request to save CustomerType : {}", customerType);
-        if (customerType.getId() != null) {
+    public ResponseEntity<CustomerTypeDTO> createCustomerType(@RequestBody CustomerTypeDTO customerTypeDTO) throws URISyntaxException {
+        log.debug("REST request to save CustomerType : {}", customerTypeDTO);
+        if (customerTypeDTO.getId() != null) {
             throw new BadRequestAlertException("A new customerType cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        CustomerType result = customerTypeRepository.save(customerType);
+        CustomerTypeDTO result = customerTypeService.save(customerTypeDTO);
         return ResponseEntity.created(new URI("/api/customer-types/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -58,22 +57,22 @@ public class CustomerTypeResource {
     /**
      * PUT  /customer-types : Updates an existing customerType.
      *
-     * @param customerType the customerType to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated customerType,
-     * or with status 400 (Bad Request) if the customerType is not valid,
-     * or with status 500 (Internal Server Error) if the customerType couldn't be updated
+     * @param customerTypeDTO the customerTypeDTO to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated customerTypeDTO,
+     * or with status 400 (Bad Request) if the customerTypeDTO is not valid,
+     * or with status 500 (Internal Server Error) if the customerTypeDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/customer-types")
     @Timed
-    public ResponseEntity<CustomerType> updateCustomerType(@RequestBody CustomerType customerType) throws URISyntaxException {
-        log.debug("REST request to update CustomerType : {}", customerType);
-        if (customerType.getId() == null) {
-            return createCustomerType(customerType);
+    public ResponseEntity<CustomerTypeDTO> updateCustomerType(@RequestBody CustomerTypeDTO customerTypeDTO) throws URISyntaxException {
+        log.debug("REST request to update CustomerType : {}", customerTypeDTO);
+        if (customerTypeDTO.getId() == null) {
+            return createCustomerType(customerTypeDTO);
         }
-        CustomerType result = customerTypeRepository.save(customerType);
+        CustomerTypeDTO result = customerTypeService.save(customerTypeDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, customerType.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, customerTypeDTO.getId().toString()))
             .body(result);
     }
 
@@ -84,36 +83,36 @@ public class CustomerTypeResource {
      */
     @GetMapping("/customer-types")
     @Timed
-    public List<CustomerType> getAllCustomerTypes() {
+    public List<CustomerTypeDTO> getAllCustomerTypes() {
         log.debug("REST request to get all CustomerTypes");
-        return customerTypeRepository.findAll();
+        return customerTypeService.findAll();
         }
 
     /**
      * GET  /customer-types/:id : get the "id" customerType.
      *
-     * @param id the id of the customerType to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the customerType, or with status 404 (Not Found)
+     * @param id the id of the customerTypeDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the customerTypeDTO, or with status 404 (Not Found)
      */
     @GetMapping("/customer-types/{id}")
     @Timed
-    public ResponseEntity<CustomerType> getCustomerType(@PathVariable Long id) {
+    public ResponseEntity<CustomerTypeDTO> getCustomerType(@PathVariable Long id) {
         log.debug("REST request to get CustomerType : {}", id);
-        CustomerType customerType = customerTypeRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(customerType));
+        CustomerTypeDTO customerTypeDTO = customerTypeService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(customerTypeDTO));
     }
 
     /**
      * DELETE  /customer-types/:id : delete the "id" customerType.
      *
-     * @param id the id of the customerType to delete
+     * @param id the id of the customerTypeDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/customer-types/{id}")
     @Timed
     public ResponseEntity<Void> deleteCustomerType(@PathVariable Long id) {
         log.debug("REST request to delete CustomerType : {}", id);
-        customerTypeRepository.delete(id);
+        customerTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

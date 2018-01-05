@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { SERVER_API_URL } from '../../app.constants';
 
 import { Project } from './project.model';
@@ -9,7 +9,7 @@ import { ResponseWrapper, createRequestOption } from '../../shared';
 @Injectable()
 export class ProjectService {
 
-    private resourceUrl = SERVER_API_URL + 'api/projects';
+    private resourceUrl =  SERVER_API_URL + 'api/projects';
 
     constructor(private http: Http) { }
 

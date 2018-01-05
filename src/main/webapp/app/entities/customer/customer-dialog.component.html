@@ -45,9 +45,9 @@
 
         <div class="form-group">
             <label class="form-control-label" for="field_type">Type</label>
-            <select class="form-control" id="field_type" name="type" [(ngModel)]="customer.type">
+            <select class="form-control" id="field_type" name="type" [(ngModel)]="customer.typeId">
                 <option [ngValue]="null"></option>
-                <option [ngValue]="customerTypeOption.id === customer.type?.id ? customer.type : customerTypeOption" *ngFor="let customerTypeOption of types; trackBy: trackCustomerTypeById">{{customerTypeOption.id}}</option>
+                <option [ngValue]="customerTypeOption.id" *ngFor="let customerTypeOption of types; trackBy: trackCustomerTypeById">{{customerTypeOption.id}}</option>
             </select>
         </div>
     </div>

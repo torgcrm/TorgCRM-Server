@@ -9,7 +9,7 @@ export class Customer implements BaseEntity {
         public fax?: string,
         public source?: string,
         public comment?: string,
-        public type?: BaseEntity,
+        public typeId?: number,
         public projects?: BaseEntity[],
         public deals?: BaseEntity[],
     ) {

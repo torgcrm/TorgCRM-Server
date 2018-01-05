@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Response } from '@angular/http';
 
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
@@ -37,11 +37,11 @@ export class CustomerDialogComponent implements OnInit {
         this.customerTypeService
             .query({filter: 'customer-is-null'})
             .subscribe((res: ResponseWrapper) => {
-                if (!this.customer.type || !this.customer.type.id) {
+                if (!this.customer.typeId) {
                     this.types = res.json;
                 } else {
                     this.customerTypeService
-                        .find(this.customer.type.id)
+                        .find(this.customer.typeId)
                         .subscribe((subRes: CustomerType) => {
                             this.types = [subRes].concat(res.json);
                         }, (subRes: ResponseWrapper) => this.onError(subRes.json));

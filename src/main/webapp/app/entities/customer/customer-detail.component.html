@@ -30,8 +30,8 @@
         </dd>
         <dt><span>Type</span></dt>
         <dd>
-            <div *ngIf="customer.type">
-                <a [routerLink]="['/customer-type', customer.type?.id]">{{customer.type?.id}}</a>
+            <div *ngIf="customer.typeId">
+                <a [routerLink]="['/customer-type', customer.typeId]">{{customer.typeId}}</a>
             </div>
         </dd>
     </dl>
