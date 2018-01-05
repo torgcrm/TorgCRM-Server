@@ -6,6 +6,7 @@ import { JhiDateUtils } from 'ng-jhipster';
 
 import { MenuService } from '../../../../../../main/webapp/app/entities/menu/menu.service';
 import { Menu } from '../../../../../../main/webapp/app/entities/menu/menu.model';
+import { SERVER_API_URL } from '../../../../../../main/webapp/app/app.constants';
 
 describe('Service Tests', () => {
 
@@ -42,7 +43,9 @@ describe('Service Tests', () => {
                 service.find(123).subscribe(() => {});
 
                 expect(this.lastConnection).toBeDefined();
-                expect(this.lastConnection.request.url).toEqual('api/menus/' + 123);
+
+                const resourceUrl = SERVER_API_URL + 'api/menus';
+                expect(this.lastConnection.request.url).toEqual(resourceUrl + '/' + 123);
             });
             it('should return Menu', () => {
 

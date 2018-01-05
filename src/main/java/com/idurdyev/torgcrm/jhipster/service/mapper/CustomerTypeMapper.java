@@ -11,9 +11,7 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {})
 public interface CustomerTypeMapper extends EntityMapper<CustomerTypeDTO, CustomerType> {
 
-    
 
-    
 
     default CustomerType fromId(Long id) {
         if (id == null) {

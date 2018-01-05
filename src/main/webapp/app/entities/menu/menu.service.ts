@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { SERVER_API_URL } from '../../app.constants';
 
 import { Menu } from './menu.model';
@@ -9,7 +9,7 @@ import { ResponseWrapper, createRequestOption } from '../../shared';
 @Injectable()
 export class MenuService {
 
-    private resourceUrl = SERVER_API_URL + 'api/menus';
+    private resourceUrl =  SERVER_API_URL + 'api/menus';
 
     constructor(private http: Http) { }
 

@@ -12,7 +12,7 @@ import org.mapstruct.*;
 public interface MenuMapper extends EntityMapper<MenuDTO, Menu> {
 
     @Mapping(source = "parent.id", target = "parentId")
-    MenuDTO toDto(Menu menu); 
+    MenuDTO toDto(Menu menu);
 
     @Mapping(source = "parentId", target = "parent")
     @Mapping(target = "items", ignore = true)

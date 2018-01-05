@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional
-public class MenuItemServiceImpl implements MenuItemService{
+public class MenuItemServiceImpl implements MenuItemService {
 
     private final Logger log = LoggerFactory.getLogger(MenuItemServiceImpl.class);
 
