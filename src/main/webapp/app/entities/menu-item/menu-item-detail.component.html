@@ -1,0 +1,40 @@
+
+<div *ngIf="menuItem">
+    <h2><span>Menu Item</span> {{menuItem.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Code</span></dt>
+        <dd>
+            <span>{{menuItem.code}}</span>
+        </dd>
+        <dt><span>Title</span></dt>
+        <dd>
+            <span>{{menuItem.title}}</span>
+        </dd>
+        <dt><span>Icon</span></dt>
+        <dd>
+            <span>{{menuItem.icon}}</span>
+        </dd>
+        <dt><span>Menu</span></dt>
+        <dd>
+            <div *ngIf="menuItem.menuId">
+                <a [routerLink]="['/menu', menuItem.menuId]">{{menuItem.menuId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'menu-item/'+ menuItem.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

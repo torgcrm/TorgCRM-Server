@@ -1,0 +1,32 @@
+
+<div *ngIf="deal">
+    <h2><span>Deal</span> {{deal.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Title</span></dt>
+        <dd>
+            <span>{{deal.title}}</span>
+        </dd>
+        <dt><span>Customer</span></dt>
+        <dd>
+            <div *ngIf="deal.customer">
+                <a [routerLink]="['/customer', deal.customer?.id]">{{deal.customer?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'deal/'+ deal.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

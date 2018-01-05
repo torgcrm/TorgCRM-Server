@@ -1,0 +1,68 @@
+<div>
+    <h2>
+        <span>Menu Items</span>
+        <button class="btn btn-primary float-right jh-create-entity create-menu-item" [routerLink]="['/', { outlets: { popup: ['menu-item-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Menu Item
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="menuItems">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Code</span></th>
+            <th><span>Title</span></th>
+            <th><span>Icon</span></th>
+            <th><span>Menu</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let menuItem of menuItems ;trackBy: trackId">
+                <td><a [routerLink]="['../menu-item', menuItem.id ]">{{menuItem.id}}</a></td>
+                <td>{{menuItem.code}}</td>
+                <td>{{menuItem.title}}</td>
+                <td>{{menuItem.icon}}</td>
+                <td>
+                    <div *ngIf="menuItem.menuId">
+                        <a [routerLink]="['../menu', menuItem.menuId  ]" >{{menuItem.menuId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../menu-item', menuItem.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'menu-item/'+ menuItem.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'menu-item/'+ menuItem.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
