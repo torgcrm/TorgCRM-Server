@@ -1,3 +1,4 @@
 id;code;title;icon;menu_id
 1;customers;Customers;:/icons/Icons/customers.ico;2
-2;tasks;Tasks;:/icons/Icons/task.ico;2
+2;orders;Orders;:/icons/Icons/search.svg;2
+3;tasks;Tasks;:/icons/Icons/task.ico;2
