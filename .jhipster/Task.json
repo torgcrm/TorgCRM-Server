@@ -14,8 +14,8 @@
     ],
     "changelogDate": "20171229194813",
     "entityTableName": "task",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "no",
-    "service": "no",
+    "service": "serviceImpl",
     "jpaMetamodelFiltering": false
 }
