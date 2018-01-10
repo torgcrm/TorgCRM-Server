@@ -1,11 +1,10 @@
 package com.idurdyev.torgcrm.jhipster.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.idurdyev.torgcrm.jhipster.domain.Project;
-
-import com.idurdyev.torgcrm.jhipster.repository.ProjectRepository;
+import com.idurdyev.torgcrm.jhipster.service.ProjectService;
 import com.idurdyev.torgcrm.jhipster.web.rest.errors.BadRequestAlertException;
 import com.idurdyev.torgcrm.jhipster.web.rest.util.HeaderUtil;
+import com.idurdyev.torgcrm.jhipster.service.dto.ProjectDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,27 +28,27 @@ public class ProjectResource {
 
     private static final String ENTITY_NAME = "project";
 
-    private final ProjectRepository projectRepository;
+    private final ProjectService projectService;
 
-    public ProjectResource(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
+    public ProjectResource(ProjectService projectService) {
+        this.projectService = projectService;
     }
 
     /**
      * POST  /projects : Create a new project.
      *
-     * @param project the project to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new project, or with status 400 (Bad Request) if the project has already an ID
+     * @param projectDTO the projectDTO to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new projectDTO, or with status 400 (Bad Request) if the project has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/projects")
     @Timed
-    public ResponseEntity<Project> createProject(@RequestBody Project project) throws URISyntaxException {
-        log.debug("REST request to save Project : {}", project);
-        if (project.getId() != null) {
+    public ResponseEntity<ProjectDTO> createProject(@RequestBody ProjectDTO projectDTO) throws URISyntaxException {
+        log.debug("REST request to save Project : {}", projectDTO);
+        if (projectDTO.getId() != null) {
             throw new BadRequestAlertException("A new project cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Project result = projectRepository.save(project);
+        ProjectDTO result = projectService.save(projectDTO);
         return ResponseEntity.created(new URI("/api/projects/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -58,22 +57,22 @@ public class ProjectResource {
     /**
      * PUT  /projects : Updates an existing project.
      *
-     * @param project the project to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated project,
-     * or with status 400 (Bad Request) if the project is not valid,
-     * or with status 500 (Internal Server Error) if the project couldn't be updated
+     * @param projectDTO the projectDTO to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated projectDTO,
+     * or with status 400 (Bad Request) if the projectDTO is not valid,
+     * or with status 500 (Internal Server Error) if the projectDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/projects")
     @Timed
-    public ResponseEntity<Project> updateProject(@RequestBody Project project) throws URISyntaxException {
-        log.debug("REST request to update Project : {}", project);
-        if (project.getId() == null) {
-            return createProject(project);
+    public ResponseEntity<ProjectDTO> updateProject(@RequestBody ProjectDTO projectDTO) throws URISyntaxException {
+        log.debug("REST request to update Project : {}", projectDTO);
+        if (projectDTO.getId() == null) {
+            return createProject(projectDTO);
         }
-        Project result = projectRepository.save(project);
+        ProjectDTO result = projectService.save(projectDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, project.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, projectDTO.getId().toString()))
             .body(result);
     }
 
@@ -84,36 +83,36 @@ public class ProjectResource {
      */
     @GetMapping("/projects")
     @Timed
-    public List<Project> getAllProjects() {
+    public List<ProjectDTO> getAllProjects() {
         log.debug("REST request to get all Projects");
-        return projectRepository.findAll();
+        return projectService.findAll();
         }
 
     /**
      * GET  /projects/:id : get the "id" project.
      *
-     * @param id the id of the project to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the project, or with status 404 (Not Found)
+     * @param id the id of the projectDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the projectDTO, or with status 404 (Not Found)
      */
     @GetMapping("/projects/{id}")
     @Timed
-    public ResponseEntity<Project> getProject(@PathVariable Long id) {
+    public ResponseEntity<ProjectDTO> getProject(@PathVariable Long id) {
         log.debug("REST request to get Project : {}", id);
-        Project project = projectRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(project));
+        ProjectDTO projectDTO = projectService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(projectDTO));
     }
 
     /**
      * DELETE  /projects/:id : delete the "id" project.
      *
-     * @param id the id of the project to delete
+     * @param id the id of the projectDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/projects/{id}")
     @Timed
     public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
         log.debug("REST request to delete Project : {}", id);
-        projectRepository.delete(id);
+        projectService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

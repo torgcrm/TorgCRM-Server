@@ -27,8 +27,8 @@
                 <td><a [routerLink]="['../deal', deal.id ]">{{deal.id}}</a></td>
                 <td>{{deal.title}}</td>
                 <td>
-                    <div *ngIf="deal.customer">
-                        <a [routerLink]="['../customer', deal.customer?.id ]" >{{deal.customer?.id}}</a>
+                    <div *ngIf="deal.customerId">
+                        <a [routerLink]="['../customer', deal.customerId  ]" >{{deal.customerId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

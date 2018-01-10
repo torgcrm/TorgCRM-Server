@@ -36,6 +36,9 @@ entity Deal {
 
 entity Task {
 	title String
+    beginDate LocalDate
+    endDate LocalDate
+    comment String
     type TaskType
 }
 
@@ -50,8 +53,17 @@ entity MenuItem {
     icon String
 }
 
+entity Manager {
+	fullname String
+    comment String
+}
+
 enum TaskType {
 	CALL, MEETING, EMAIL
+}
+
+relationship ManyToOne {
+	Task{manager} to Manager
 }
 
 relationship OneToOne {
@@ -77,3 +89,6 @@ relationship OneToMany {
 relationship OneToOne {
 	Employee{department} to Department
 }
+
+dto * with mapstruct
+service * with serviceImpl

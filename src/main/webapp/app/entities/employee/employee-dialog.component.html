@@ -40,9 +40,9 @@
 
         <div class="form-group">
             <label class="form-control-label" for="field_department">Department</label>
-            <select class="form-control" id="field_department" name="department" [(ngModel)]="employee.department">
+            <select class="form-control" id="field_department" name="department" [(ngModel)]="employee.departmentId">
                 <option [ngValue]="null"></option>
-                <option [ngValue]="departmentOption.id === employee.department?.id ? employee.department : departmentOption" *ngFor="let departmentOption of departments; trackBy: trackDepartmentById">{{departmentOption.id}}</option>
+                <option [ngValue]="departmentOption.id" *ngFor="let departmentOption of departments; trackBy: trackDepartmentById">{{departmentOption.id}}</option>
             </select>
         </div>
     </div>

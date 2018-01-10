@@ -34,8 +34,8 @@
     ],
     "changelogDate": "20171229194810",
     "entityTableName": "employee",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "no",
-    "service": "no",
+    "service": "serviceImpl",
     "jpaMetamodelFiltering": false
 }

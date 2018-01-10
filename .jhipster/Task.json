@@ -1,9 +1,28 @@
 {
     "fluentMethods": true,
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "manager",
+            "otherEntityName": "manager",
+            "otherEntityField": "id"
+        }
+    ],
     "fields": [
         {
             "fieldName": "title",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "beginDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "endDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "comment",
             "fieldType": "String"
         },
         {

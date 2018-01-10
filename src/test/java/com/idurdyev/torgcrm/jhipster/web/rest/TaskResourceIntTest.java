@@ -4,6 +4,9 @@ import com.idurdyev.torgcrm.jhipster.TorgCrmApp;
 
 import com.idurdyev.torgcrm.jhipster.domain.Task;
 import com.idurdyev.torgcrm.jhipster.repository.TaskRepository;
+import com.idurdyev.torgcrm.jhipster.service.TaskService;
+import com.idurdyev.torgcrm.jhipster.service.dto.TaskDTO;
+import com.idurdyev.torgcrm.jhipster.service.mapper.TaskMapper;
 import com.idurdyev.torgcrm.jhipster.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -21,6 +24,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import static com.idurdyev.torgcrm.jhipster.web.rest.TestUtil.createFormattingConversionService;
@@ -42,11 +47,26 @@ public class TaskResourceIntTest {
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
+    private static final LocalDate DEFAULT_BEGIN_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_BEGIN_DATE = LocalDate.now(ZoneId.systemDefault());
+
+    private static final LocalDate DEFAULT_END_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_END_DATE = LocalDate.now(ZoneId.systemDefault());
+
+    private static final String DEFAULT_COMMENT = "AAAAAAAAAA";
+    private static final String UPDATED_COMMENT = "BBBBBBBBBB";
+
     private static final TaskType DEFAULT_TYPE = TaskType.CALL;
     private static final TaskType UPDATED_TYPE = TaskType.MEETING;
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private TaskMapper taskMapper;
+
+    @Autowired
+    private TaskService taskService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -67,7 +87,7 @@ public class TaskResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TaskResource taskResource = new TaskResource(taskRepository);
+        final TaskResource taskResource = new TaskResource(taskService);
         this.restTaskMockMvc = MockMvcBuilders.standaloneSetup(taskResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -84,6 +104,9 @@ public class TaskResourceIntTest {
     public static Task createEntity(EntityManager em) {
         Task task = new Task()
             .title(DEFAULT_TITLE)
+            .beginDate(DEFAULT_BEGIN_DATE)
+            .endDate(DEFAULT_END_DATE)
+            .comment(DEFAULT_COMMENT)
             .type(DEFAULT_TYPE);
         return task;
     }
@@ -99,9 +122,10 @@ public class TaskResourceIntTest {
         int databaseSizeBeforeCreate = taskRepository.findAll().size();
 
         // Create the Task
+        TaskDTO taskDTO = taskMapper.toDto(task);
         restTaskMockMvc.perform(post("/api/tasks")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(task)))
+            .content(TestUtil.convertObjectToJsonBytes(taskDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Task in the database
@@ -109,6 +133,9 @@ public class TaskResourceIntTest {
         assertThat(taskList).hasSize(databaseSizeBeforeCreate + 1);
         Task testTask = taskList.get(taskList.size() - 1);
         assertThat(testTask.getTitle()).isEqualTo(DEFAULT_TITLE);
+        assertThat(testTask.getBeginDate()).isEqualTo(DEFAULT_BEGIN_DATE);
+        assertThat(testTask.getEndDate()).isEqualTo(DEFAULT_END_DATE);
+        assertThat(testTask.getComment()).isEqualTo(DEFAULT_COMMENT);
         assertThat(testTask.getType()).isEqualTo(DEFAULT_TYPE);
     }
 
@@ -119,11 +146,12 @@ public class TaskResourceIntTest {
 
         // Create the Task with an existing ID
         task.setId(1L);
+        TaskDTO taskDTO = taskMapper.toDto(task);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restTaskMockMvc.perform(post("/api/tasks")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(task)))
+            .content(TestUtil.convertObjectToJsonBytes(taskDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Task in the database
@@ -143,6 +171,9 @@ public class TaskResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(task.getId().intValue())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
+            .andExpect(jsonPath("$.[*].beginDate").value(hasItem(DEFAULT_BEGIN_DATE.toString())))
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
+            .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT.toString())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())));
     }
 
@@ -158,6 +189,9 @@ public class TaskResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(task.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
+            .andExpect(jsonPath("$.beginDate").value(DEFAULT_BEGIN_DATE.toString()))
+            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
+            .andExpect(jsonPath("$.comment").value(DEFAULT_COMMENT.toString()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()));
     }
 
@@ -182,11 +216,15 @@ public class TaskResourceIntTest {
         em.detach(updatedTask);
         updatedTask
             .title(UPDATED_TITLE)
+            .beginDate(UPDATED_BEGIN_DATE)
+            .endDate(UPDATED_END_DATE)
+            .comment(UPDATED_COMMENT)
             .type(UPDATED_TYPE);
+        TaskDTO taskDTO = taskMapper.toDto(updatedTask);
 
         restTaskMockMvc.perform(put("/api/tasks")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedTask)))
+            .content(TestUtil.convertObjectToJsonBytes(taskDTO)))
             .andExpect(status().isOk());
 
         // Validate the Task in the database
@@ -194,6 +232,9 @@ public class TaskResourceIntTest {
         assertThat(taskList).hasSize(databaseSizeBeforeUpdate);
         Task testTask = taskList.get(taskList.size() - 1);
         assertThat(testTask.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testTask.getBeginDate()).isEqualTo(UPDATED_BEGIN_DATE);
+        assertThat(testTask.getEndDate()).isEqualTo(UPDATED_END_DATE);
+        assertThat(testTask.getComment()).isEqualTo(UPDATED_COMMENT);
         assertThat(testTask.getType()).isEqualTo(UPDATED_TYPE);
     }
 
@@ -203,11 +244,12 @@ public class TaskResourceIntTest {
         int databaseSizeBeforeUpdate = taskRepository.findAll().size();
 
         // Create the Task
+        TaskDTO taskDTO = taskMapper.toDto(task);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restTaskMockMvc.perform(put("/api/tasks")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(task)))
+            .content(TestUtil.convertObjectToJsonBytes(taskDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Task in the database
@@ -245,5 +287,28 @@ public class TaskResourceIntTest {
         assertThat(task1).isNotEqualTo(task2);
         task1.setId(null);
         assertThat(task1).isNotEqualTo(task2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(TaskDTO.class);
+        TaskDTO taskDTO1 = new TaskDTO();
+        taskDTO1.setId(1L);
+        TaskDTO taskDTO2 = new TaskDTO();
+        assertThat(taskDTO1).isNotEqualTo(taskDTO2);
+        taskDTO2.setId(taskDTO1.getId());
+        assertThat(taskDTO1).isEqualTo(taskDTO2);
+        taskDTO2.setId(2L);
+        assertThat(taskDTO1).isNotEqualTo(taskDTO2);
+        taskDTO1.setId(null);
+        assertThat(taskDTO1).isNotEqualTo(taskDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(taskMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(taskMapper.fromId(null)).isNull();
     }
 }

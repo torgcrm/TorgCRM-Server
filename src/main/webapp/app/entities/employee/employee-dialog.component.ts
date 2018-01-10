@@ -37,11 +37,11 @@ export class EmployeeDialogComponent implements OnInit {
         this.departmentService
             .query({filter: 'employee-is-null'})
             .subscribe((res: ResponseWrapper) => {
-                if (!this.employee.department || !this.employee.department.id) {
+                if (!this.employee.departmentId) {
                     this.departments = res.json;
                 } else {
                     this.departmentService
-                        .find(this.employee.department.id)
+                        .find(this.employee.departmentId)
                         .subscribe((subRes: Department) => {
                             this.departments = [subRes].concat(res.json);
                         }, (subRes: ResponseWrapper) => this.onError(subRes.json));

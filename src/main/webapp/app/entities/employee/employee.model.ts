@@ -8,7 +8,7 @@ export class Employee implements BaseEntity {
         public secondName?: string,
         public fullName?: string,
         public position?: string,
-        public department?: BaseEntity,
+        public departmentId?: number,
     ) {
     }
 }

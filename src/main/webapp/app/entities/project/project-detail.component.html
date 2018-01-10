@@ -18,8 +18,8 @@
         </dd>
         <dt><span>Customer</span></dt>
         <dd>
-            <div *ngIf="project.customer">
-                <a [routerLink]="['/customer', project.customer?.id]">{{project.customer?.id}}</a>
+            <div *ngIf="project.customerId">
+                <a [routerLink]="['/customer', project.customerId]">{{project.customerId}}</a>
             </div>
         </dd>
     </dl>

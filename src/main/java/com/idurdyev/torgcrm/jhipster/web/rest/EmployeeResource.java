@@ -1,11 +1,10 @@
 package com.idurdyev.torgcrm.jhipster.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.idurdyev.torgcrm.jhipster.domain.Employee;
-
-import com.idurdyev.torgcrm.jhipster.repository.EmployeeRepository;
+import com.idurdyev.torgcrm.jhipster.service.EmployeeService;
 import com.idurdyev.torgcrm.jhipster.web.rest.errors.BadRequestAlertException;
 import com.idurdyev.torgcrm.jhipster.web.rest.util.HeaderUtil;
+import com.idurdyev.torgcrm.jhipster.service.dto.EmployeeDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,27 +28,27 @@ public class EmployeeResource {
 
     private static final String ENTITY_NAME = "employee";
 
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeService employeeService;
 
-    public EmployeeResource(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeResource(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     /**
      * POST  /employees : Create a new employee.
      *
-     * @param employee the employee to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new employee, or with status 400 (Bad Request) if the employee has already an ID
+     * @param employeeDTO the employeeDTO to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new employeeDTO, or with status 400 (Bad Request) if the employee has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/employees")
     @Timed
-    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) throws URISyntaxException {
-        log.debug("REST request to save Employee : {}", employee);
-        if (employee.getId() != null) {
+    public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO) throws URISyntaxException {
+        log.debug("REST request to save Employee : {}", employeeDTO);
+        if (employeeDTO.getId() != null) {
             throw new BadRequestAlertException("A new employee cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Employee result = employeeRepository.save(employee);
+        EmployeeDTO result = employeeService.save(employeeDTO);
         return ResponseEntity.created(new URI("/api/employees/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -58,22 +57,22 @@ public class EmployeeResource {
     /**
      * PUT  /employees : Updates an existing employee.
      *
-     * @param employee the employee to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated employee,
-     * or with status 400 (Bad Request) if the employee is not valid,
-     * or with status 500 (Internal Server Error) if the employee couldn't be updated
+     * @param employeeDTO the employeeDTO to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated employeeDTO,
+     * or with status 400 (Bad Request) if the employeeDTO is not valid,
+     * or with status 500 (Internal Server Error) if the employeeDTO couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/employees")
     @Timed
-    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee) throws URISyntaxException {
-        log.debug("REST request to update Employee : {}", employee);
-        if (employee.getId() == null) {
-            return createEmployee(employee);
+    public ResponseEntity<EmployeeDTO> updateEmployee(@RequestBody EmployeeDTO employeeDTO) throws URISyntaxException {
+        log.debug("REST request to update Employee : {}", employeeDTO);
+        if (employeeDTO.getId() == null) {
+            return createEmployee(employeeDTO);
         }
-        Employee result = employeeRepository.save(employee);
+        EmployeeDTO result = employeeService.save(employeeDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, employee.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, employeeDTO.getId().toString()))
             .body(result);
     }
 
@@ -84,36 +83,36 @@ public class EmployeeResource {
      */
     @GetMapping("/employees")
     @Timed
-    public List<Employee> getAllEmployees() {
+    public List<EmployeeDTO> getAllEmployees() {
         log.debug("REST request to get all Employees");
-        return employeeRepository.findAll();
+        return employeeService.findAll();
         }
 
     /**
      * GET  /employees/:id : get the "id" employee.
      *
-     * @param id the id of the employee to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the employee, or with status 404 (Not Found)
+     * @param id the id of the employeeDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the employeeDTO, or with status 404 (Not Found)
      */
     @GetMapping("/employees/{id}")
     @Timed
-    public ResponseEntity<Employee> getEmployee(@PathVariable Long id) {
+    public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable Long id) {
         log.debug("REST request to get Employee : {}", id);
-        Employee employee = employeeRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(employee));
+        EmployeeDTO employeeDTO = employeeService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(employeeDTO));
     }
 
     /**
      * DELETE  /employees/:id : delete the "id" employee.
      *
-     * @param id the id of the employee to delete
+     * @param id the id of the employeeDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/employees/{id}")
     @Timed
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         log.debug("REST request to delete Employee : {}", id);
-        employeeRepository.delete(id);
+        employeeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

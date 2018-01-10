@@ -4,6 +4,9 @@ import com.idurdyev.torgcrm.jhipster.TorgCrmApp;
 
 import com.idurdyev.torgcrm.jhipster.domain.Department;
 import com.idurdyev.torgcrm.jhipster.repository.DepartmentRepository;
+import com.idurdyev.torgcrm.jhipster.service.DepartmentService;
+import com.idurdyev.torgcrm.jhipster.service.dto.DepartmentDTO;
+import com.idurdyev.torgcrm.jhipster.service.mapper.DepartmentMapper;
 import com.idurdyev.torgcrm.jhipster.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +48,12 @@ public class DepartmentResourceIntTest {
     private DepartmentRepository departmentRepository;
 
     @Autowired
+    private DepartmentMapper departmentMapper;
+
+    @Autowired
+    private DepartmentService departmentService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +72,7 @@ public class DepartmentResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final DepartmentResource departmentResource = new DepartmentResource(departmentRepository);
+        final DepartmentResource departmentResource = new DepartmentResource(departmentService);
         this.restDepartmentMockMvc = MockMvcBuilders.standaloneSetup(departmentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -94,9 +103,10 @@ public class DepartmentResourceIntTest {
         int databaseSizeBeforeCreate = departmentRepository.findAll().size();
 
         // Create the Department
+        DepartmentDTO departmentDTO = departmentMapper.toDto(department);
         restDepartmentMockMvc.perform(post("/api/departments")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(department)))
+            .content(TestUtil.convertObjectToJsonBytes(departmentDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Department in the database
@@ -113,11 +123,12 @@ public class DepartmentResourceIntTest {
 
         // Create the Department with an existing ID
         department.setId(1L);
+        DepartmentDTO departmentDTO = departmentMapper.toDto(department);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restDepartmentMockMvc.perform(post("/api/departments")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(department)))
+            .content(TestUtil.convertObjectToJsonBytes(departmentDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Department in the database
@@ -174,10 +185,11 @@ public class DepartmentResourceIntTest {
         em.detach(updatedDepartment);
         updatedDepartment
             .title(UPDATED_TITLE);
+        DepartmentDTO departmentDTO = departmentMapper.toDto(updatedDepartment);
 
         restDepartmentMockMvc.perform(put("/api/departments")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedDepartment)))
+            .content(TestUtil.convertObjectToJsonBytes(departmentDTO)))
             .andExpect(status().isOk());
 
         // Validate the Department in the database
@@ -193,11 +205,12 @@ public class DepartmentResourceIntTest {
         int databaseSizeBeforeUpdate = departmentRepository.findAll().size();
 
         // Create the Department
+        DepartmentDTO departmentDTO = departmentMapper.toDto(department);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restDepartmentMockMvc.perform(put("/api/departments")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(department)))
+            .content(TestUtil.convertObjectToJsonBytes(departmentDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Department in the database
@@ -235,5 +248,28 @@ public class DepartmentResourceIntTest {
         assertThat(department1).isNotEqualTo(department2);
         department1.setId(null);
         assertThat(department1).isNotEqualTo(department2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(DepartmentDTO.class);
+        DepartmentDTO departmentDTO1 = new DepartmentDTO();
+        departmentDTO1.setId(1L);
+        DepartmentDTO departmentDTO2 = new DepartmentDTO();
+        assertThat(departmentDTO1).isNotEqualTo(departmentDTO2);
+        departmentDTO2.setId(departmentDTO1.getId());
+        assertThat(departmentDTO1).isEqualTo(departmentDTO2);
+        departmentDTO2.setId(2L);
+        assertThat(departmentDTO1).isNotEqualTo(departmentDTO2);
+        departmentDTO1.setId(null);
+        assertThat(departmentDTO1).isNotEqualTo(departmentDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(departmentMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(departmentMapper.fromId(null)).isNull();
     }
 }

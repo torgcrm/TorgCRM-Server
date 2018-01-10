@@ -10,7 +10,11 @@ export class Task implements BaseEntity {
     constructor(
         public id?: number,
         public title?: string,
+        public beginDate?: any,
+        public endDate?: any,
+        public comment?: string,
         public type?: TaskType,
+        public managerId?: number,
     ) {
     }
 }

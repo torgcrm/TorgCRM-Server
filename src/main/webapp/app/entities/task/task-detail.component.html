@@ -8,9 +8,27 @@
         <dd>
             <span>{{task.title}}</span>
         </dd>
+        <dt><span>Begin Date</span></dt>
+        <dd>
+            <span>{{task.beginDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>End Date</span></dt>
+        <dd>
+            <span>{{task.endDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>Comment</span></dt>
+        <dd>
+            <span>{{task.comment}}</span>
+        </dd>
         <dt><span>Type</span></dt>
         <dd>
             <span>{{task.type}}</span>
+        </dd>
+        <dt><span>Manager</span></dt>
+        <dd>
+            <div *ngIf="task.managerId">
+                <a [routerLink]="['/manager', task.managerId]">{{task.managerId}}</a>
+            </div>
         </dd>
     </dl>
 

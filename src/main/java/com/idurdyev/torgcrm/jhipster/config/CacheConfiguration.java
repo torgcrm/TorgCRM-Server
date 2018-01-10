@@ -54,6 +54,7 @@ public class CacheConfiguration {
             cm.createCache(com.idurdyev.torgcrm.jhipster.domain.MenuItem.class.getName(), jcacheConfiguration);
             cm.createCache(com.idurdyev.torgcrm.jhipster.domain.Menu.class.getName() + ".items", jcacheConfiguration);
             cm.createCache(com.idurdyev.torgcrm.jhipster.domain.CustomerType.class.getName(), jcacheConfiguration);
+            cm.createCache(com.idurdyev.torgcrm.jhipster.domain.Manager.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

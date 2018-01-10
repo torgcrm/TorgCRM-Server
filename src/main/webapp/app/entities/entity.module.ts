@@ -9,6 +9,7 @@ import { TorgCrmTaskModule } from './task/task.module';
 import { TorgCrmMenuModule } from './menu/menu.module';
 import { TorgCrmMenuItemModule } from './menu-item/menu-item.module';
 import { TorgCrmCustomerTypeModule } from './customer-type/customer-type.module';
+import { TorgCrmManagerModule } from './manager/manager.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -22,6 +23,7 @@ import { TorgCrmCustomerTypeModule } from './customer-type/customer-type.module'
         TorgCrmMenuModule,
         TorgCrmMenuItemModule,
         TorgCrmCustomerTypeModule,
+        TorgCrmManagerModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

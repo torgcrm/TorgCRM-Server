@@ -4,11 +4,13 @@ import { Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Task } from './task.model';
 import { TaskPopupService } from './task-popup.service';
 import { TaskService } from './task.service';
+import { Manager, ManagerService } from '../manager';
+import { ResponseWrapper } from '../../shared';
 
 @Component({
     selector: 'jhi-task-dialog',
@@ -19,15 +21,23 @@ export class TaskDialogComponent implements OnInit {
     task: Task;
     isSaving: boolean;
 
+    managers: Manager[];
+    beginDateDp: any;
+    endDateDp: any;
+
     constructor(
         public activeModal: NgbActiveModal,
+        private jhiAlertService: JhiAlertService,
         private taskService: TaskService,
+        private managerService: ManagerService,
         private eventManager: JhiEventManager
     ) {
     }
 
     ngOnInit() {
         this.isSaving = false;
+        this.managerService.query()
+            .subscribe((res: ResponseWrapper) => { this.managers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -58,6 +68,14 @@ export class TaskDialogComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
+    }
+
+    private onError(error: any) {
+        this.jhiAlertService.error(error.message, null, null);
+    }
+
+    trackManagerById(index: number, item: Manager) {
+        return item.id;
     }
 }
 

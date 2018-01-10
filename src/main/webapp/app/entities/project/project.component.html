@@ -31,8 +31,8 @@
                 <td>{{project.industry}}</td>
                 <td>{{project.code}}</td>
                 <td>
-                    <div *ngIf="project.customer">
-                        <a [routerLink]="['../customer', project.customer?.id ]" >{{project.customer?.id}}</a>
+                    <div *ngIf="project.customerId">
+                        <a [routerLink]="['../customer', project.customerId  ]" >{{project.customerId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

@@ -20,9 +20,9 @@
 
         <div class="form-group">
             <label class="form-control-label" for="field_customer">Customer</label>
-            <select class="form-control" id="field_customer" name="customer" [(ngModel)]="deal.customer" >
+            <select class="form-control" id="field_customer" name="customer" [(ngModel)]="deal.customerId" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="customerOption.id === deal.customer?.id ? deal.customer : customerOption" *ngFor="let customerOption of customers; trackBy: trackCustomerById">{{customerOption.id}}</option>
+                <option [ngValue]="customerOption.id" *ngFor="let customerOption of customers; trackBy: trackCustomerById">{{customerOption.id}}</option>
             </select>
         </div>
     </div>

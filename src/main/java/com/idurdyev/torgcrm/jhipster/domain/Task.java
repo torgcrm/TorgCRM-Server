@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import com.idurdyev.torgcrm.jhipster.domain.enumeration.TaskType;
@@ -28,9 +29,21 @@ public class Task implements Serializable {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "begin_date")
+    private LocalDate beginDate;
+
+    @Column(name = "end_date")
+    private LocalDate endDate;
+
+    @Column(name = "jhi_comment")
+    private String comment;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "jhi_type")
     private TaskType type;
+
+    @ManyToOne
+    private Manager manager;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -54,6 +67,45 @@ public class Task implements Serializable {
         this.title = title;
     }
 
+    public LocalDate getBeginDate() {
+        return beginDate;
+    }
+
+    public Task beginDate(LocalDate beginDate) {
+        this.beginDate = beginDate;
+        return this;
+    }
+
+    public void setBeginDate(LocalDate beginDate) {
+        this.beginDate = beginDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public Task endDate(LocalDate endDate) {
+        this.endDate = endDate;
+        return this;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public Task comment(String comment) {
+        this.comment = comment;
+        return this;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public TaskType getType() {
         return type;
     }
@@ -65,6 +117,19 @@ public class Task implements Serializable {
 
     public void setType(TaskType type) {
         this.type = type;
+    }
+
+    public Manager getManager() {
+        return manager;
+    }
+
+    public Task manager(Manager manager) {
+        this.manager = manager;
+        return this;
+    }
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -93,6 +158,9 @@ public class Task implements Serializable {
         return "Task{" +
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
+            ", beginDate='" + getBeginDate() + "'" +
+            ", endDate='" + getEndDate() + "'" +
+            ", comment='" + getComment() + "'" +
             ", type='" + getType() + "'" +
             "}";
     }

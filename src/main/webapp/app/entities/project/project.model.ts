@@ -6,7 +6,7 @@ export class Project implements BaseEntity {
         public name?: string,
         public industry?: string,
         public code?: string,
-        public customer?: BaseEntity,
+        public customerId?: number,
     ) {
     }
 }

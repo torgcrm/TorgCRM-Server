@@ -35,8 +35,8 @@
                 <td>{{employee.fullName}}</td>
                 <td>{{employee.position}}</td>
                 <td>
-                    <div *ngIf="employee.department">
-                        <a [routerLink]="['../department', employee.department?.id ]" >{{employee.department?.id}}</a>
+                    <div *ngIf="employee.departmentId">
+                        <a [routerLink]="['../department', employee.departmentId  ]" >{{employee.departmentId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

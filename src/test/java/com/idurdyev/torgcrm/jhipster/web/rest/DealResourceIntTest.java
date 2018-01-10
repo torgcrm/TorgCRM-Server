@@ -4,6 +4,9 @@ import com.idurdyev.torgcrm.jhipster.TorgCrmApp;
 
 import com.idurdyev.torgcrm.jhipster.domain.Deal;
 import com.idurdyev.torgcrm.jhipster.repository.DealRepository;
+import com.idurdyev.torgcrm.jhipster.service.DealService;
+import com.idurdyev.torgcrm.jhipster.service.dto.DealDTO;
+import com.idurdyev.torgcrm.jhipster.service.mapper.DealMapper;
 import com.idurdyev.torgcrm.jhipster.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +48,12 @@ public class DealResourceIntTest {
     private DealRepository dealRepository;
 
     @Autowired
+    private DealMapper dealMapper;
+
+    @Autowired
+    private DealService dealService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +72,7 @@ public class DealResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final DealResource dealResource = new DealResource(dealRepository);
+        final DealResource dealResource = new DealResource(dealService);
         this.restDealMockMvc = MockMvcBuilders.standaloneSetup(dealResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -94,9 +103,10 @@ public class DealResourceIntTest {
         int databaseSizeBeforeCreate = dealRepository.findAll().size();
 
         // Create the Deal
+        DealDTO dealDTO = dealMapper.toDto(deal);
         restDealMockMvc.perform(post("/api/deals")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(deal)))
+            .content(TestUtil.convertObjectToJsonBytes(dealDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Deal in the database
@@ -113,11 +123,12 @@ public class DealResourceIntTest {
 
         // Create the Deal with an existing ID
         deal.setId(1L);
+        DealDTO dealDTO = dealMapper.toDto(deal);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restDealMockMvc.perform(post("/api/deals")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(deal)))
+            .content(TestUtil.convertObjectToJsonBytes(dealDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Deal in the database
@@ -174,10 +185,11 @@ public class DealResourceIntTest {
         em.detach(updatedDeal);
         updatedDeal
             .title(UPDATED_TITLE);
+        DealDTO dealDTO = dealMapper.toDto(updatedDeal);
 
         restDealMockMvc.perform(put("/api/deals")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedDeal)))
+            .content(TestUtil.convertObjectToJsonBytes(dealDTO)))
             .andExpect(status().isOk());
 
         // Validate the Deal in the database
@@ -193,11 +205,12 @@ public class DealResourceIntTest {
         int databaseSizeBeforeUpdate = dealRepository.findAll().size();
 
         // Create the Deal
+        DealDTO dealDTO = dealMapper.toDto(deal);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restDealMockMvc.perform(put("/api/deals")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(deal)))
+            .content(TestUtil.convertObjectToJsonBytes(dealDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Deal in the database
@@ -235,5 +248,28 @@ public class DealResourceIntTest {
         assertThat(deal1).isNotEqualTo(deal2);
         deal1.setId(null);
         assertThat(deal1).isNotEqualTo(deal2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(DealDTO.class);
+        DealDTO dealDTO1 = new DealDTO();
+        dealDTO1.setId(1L);
+        DealDTO dealDTO2 = new DealDTO();
+        assertThat(dealDTO1).isNotEqualTo(dealDTO2);
+        dealDTO2.setId(dealDTO1.getId());
+        assertThat(dealDTO1).isEqualTo(dealDTO2);
+        dealDTO2.setId(2L);
+        assertThat(dealDTO1).isNotEqualTo(dealDTO2);
+        dealDTO1.setId(null);
+        assertThat(dealDTO1).isNotEqualTo(dealDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(dealMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(dealMapper.fromId(null)).isNull();
     }
 }

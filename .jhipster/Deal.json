@@ -16,8 +16,8 @@
     ],
     "changelogDate": "20171229194812",
     "entityTableName": "deal",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "no",
-    "service": "no",
+    "service": "serviceImpl",
     "jpaMetamodelFiltering": false
 }

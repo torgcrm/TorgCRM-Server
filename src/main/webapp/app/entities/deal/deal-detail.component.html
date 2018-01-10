@@ -10,8 +10,8 @@
         </dd>
         <dt><span>Customer</span></dt>
         <dd>
-            <div *ngIf="deal.customer">
-                <a [routerLink]="['/customer', deal.customer?.id]">{{deal.customer?.id}}</a>
+            <div *ngIf="deal.customerId">
+                <a [routerLink]="['/customer', deal.customerId]">{{deal.customerId}}</a>
             </div>
         </dd>
     </dl>

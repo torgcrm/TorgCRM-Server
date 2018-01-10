@@ -25,7 +25,23 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="begin_date" type="date">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="end_date" type="date">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="jhi_comment" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="jhi_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="manager_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

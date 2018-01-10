@@ -26,6 +26,20 @@ export class TaskPopupService {
 
             if (id) {
                 this.taskService.find(id).subscribe((task) => {
+                    if (task.beginDate) {
+                        task.beginDate = {
+                            year: task.beginDate.getFullYear(),
+                            month: task.beginDate.getMonth() + 1,
+                            day: task.beginDate.getDate()
+                        };
+                    }
+                    if (task.endDate) {
+                        task.endDate = {
+                            year: task.endDate.getFullYear(),
+                            month: task.endDate.getMonth() + 1,
+                            day: task.endDate.getDate()
+                        };
+                    }
                     this.ngbModalRef = this.taskModalRef(component, task);
                     resolve(this.ngbModalRef);
                 });

@@ -26,8 +26,8 @@
         </dd>
         <dt><span>Department</span></dt>
         <dd>
-            <div *ngIf="employee.department">
-                <a [routerLink]="['/department', employee.department?.id]">{{employee.department?.id}}</a>
+            <div *ngIf="employee.departmentId">
+                <a [routerLink]="['/department', employee.departmentId]">{{employee.departmentId}}</a>
             </div>
         </dd>
     </dl>

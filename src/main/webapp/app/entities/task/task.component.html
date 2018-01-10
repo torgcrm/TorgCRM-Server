@@ -18,7 +18,11 @@
             <tr>
             <th><span>ID</span></th>
             <th><span>Title</span></th>
+            <th><span>Begin Date</span></th>
+            <th><span>End Date</span></th>
+            <th><span>Comment</span></th>
             <th><span>Type</span></th>
+            <th><span>Manager</span></th>
             <th></th>
             </tr>
             </thead>
@@ -26,7 +30,15 @@
             <tr *ngFor="let task of tasks ;trackBy: trackId">
                 <td><a [routerLink]="['../task', task.id ]">{{task.id}}</a></td>
                 <td>{{task.title}}</td>
+                <td>{{task.beginDate | date:'mediumDate'}}</td>
+                <td>{{task.endDate | date:'mediumDate'}}</td>
+                <td>{{task.comment}}</td>
                 <td>{{task.type}}</td>
+                <td>
+                    <div *ngIf="task.managerId">
+                        <a [routerLink]="['../manager', task.managerId  ]" >{{task.managerId}}</a>
+                    </div>
+                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
