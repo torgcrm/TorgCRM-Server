@@ -14,6 +14,7 @@ export class Task implements BaseEntity {
         public endDate?: any,
         public comment?: string,
         public type?: TaskType,
+        public customerId?: number,
         public managerId?: number,
     ) {
     }

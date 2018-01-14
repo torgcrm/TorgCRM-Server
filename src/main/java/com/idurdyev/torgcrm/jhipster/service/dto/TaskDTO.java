@@ -1,7 +1,7 @@
 package com.idurdyev.torgcrm.jhipster.service.dto;
 
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,13 +17,15 @@ public class TaskDTO implements Serializable {
 
     private String title;
 
-    private LocalDate beginDate;
+    private ZonedDateTime beginDate;
 
-    private LocalDate endDate;
+    private ZonedDateTime endDate;
 
     private String comment;
 
     private TaskType type;
+
+    private Long customerId;
 
     private Long managerId;
 
@@ -43,19 +45,19 @@ public class TaskDTO implements Serializable {
         this.title = title;
     }
 
-    public LocalDate getBeginDate() {
+    public ZonedDateTime getBeginDate() {
         return beginDate;
     }
 
-    public void setBeginDate(LocalDate beginDate) {
+    public void setBeginDate(ZonedDateTime beginDate) {
         this.beginDate = beginDate;
     }
 
-    public LocalDate getEndDate() {
+    public ZonedDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(ZonedDateTime endDate) {
         this.endDate = endDate;
     }
 
@@ -73,6 +75,14 @@ public class TaskDTO implements Serializable {
 
     public void setType(TaskType type) {
         this.type = type;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public Long getManagerId() {

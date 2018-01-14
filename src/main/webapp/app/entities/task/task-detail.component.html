@@ -10,11 +10,11 @@
         </dd>
         <dt><span>Begin Date</span></dt>
         <dd>
-            <span>{{task.beginDate | date:'mediumDate'}}</span>
+            <span>{{task.beginDate | date:'medium'}}</span>
         </dd>
         <dt><span>End Date</span></dt>
         <dd>
-            <span>{{task.endDate | date:'mediumDate'}}</span>
+            <span>{{task.endDate | date:'medium'}}</span>
         </dd>
         <dt><span>Comment</span></dt>
         <dd>
@@ -23,6 +23,12 @@
         <dt><span>Type</span></dt>
         <dd>
             <span>{{task.type}}</span>
+        </dd>
+        <dt><span>Customer</span></dt>
+        <dd>
+            <div *ngIf="task.customerId">
+                <a [routerLink]="['/customer', task.customerId]">{{task.customerId}}</a>
+            </div>
         </dd>
         <dt><span>Manager</span></dt>
         <dd>

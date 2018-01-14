@@ -6,7 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 import com.idurdyev.torgcrm.jhipster.domain.enumeration.TaskType;
@@ -30,10 +30,10 @@ public class Task implements Serializable {
     private String title;
 
     @Column(name = "begin_date")
-    private LocalDate beginDate;
+    private ZonedDateTime beginDate;
 
     @Column(name = "end_date")
-    private LocalDate endDate;
+    private ZonedDateTime endDate;
 
     @Column(name = "jhi_comment")
     private String comment;
@@ -41,6 +41,9 @@ public class Task implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "jhi_type")
     private TaskType type;
+
+    @ManyToOne
+    private Customer customer;
 
     @ManyToOne
     private Manager manager;
@@ -67,29 +70,29 @@ public class Task implements Serializable {
         this.title = title;
     }
 
-    public LocalDate getBeginDate() {
+    public ZonedDateTime getBeginDate() {
         return beginDate;
     }
 
-    public Task beginDate(LocalDate beginDate) {
+    public Task beginDate(ZonedDateTime beginDate) {
         this.beginDate = beginDate;
         return this;
     }
 
-    public void setBeginDate(LocalDate beginDate) {
+    public void setBeginDate(ZonedDateTime beginDate) {
         this.beginDate = beginDate;
     }
 
-    public LocalDate getEndDate() {
+    public ZonedDateTime getEndDate() {
         return endDate;
     }
 
-    public Task endDate(LocalDate endDate) {
+    public Task endDate(ZonedDateTime endDate) {
         this.endDate = endDate;
         return this;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(ZonedDateTime endDate) {
         this.endDate = endDate;
     }
 
@@ -117,6 +120,19 @@ public class Task implements Serializable {
 
     public void setType(TaskType type) {
         this.type = type;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public Task customer(Customer customer) {
+        this.customer = customer;
+        return this;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Manager getManager() {

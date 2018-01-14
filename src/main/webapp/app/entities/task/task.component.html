@@ -22,6 +22,7 @@
             <th><span>End Date</span></th>
             <th><span>Comment</span></th>
             <th><span>Type</span></th>
+            <th><span>Customer</span></th>
             <th><span>Manager</span></th>
             <th></th>
             </tr>
@@ -30,10 +31,15 @@
             <tr *ngFor="let task of tasks ;trackBy: trackId">
                 <td><a [routerLink]="['../task', task.id ]">{{task.id}}</a></td>
                 <td>{{task.title}}</td>
-                <td>{{task.beginDate | date:'mediumDate'}}</td>
-                <td>{{task.endDate | date:'mediumDate'}}</td>
+                <td>{{task.beginDate | date:'medium'}}</td>
+                <td>{{task.endDate | date:'medium'}}</td>
                 <td>{{task.comment}}</td>
                 <td>{{task.type}}</td>
+                <td>
+                    <div *ngIf="task.customerId">
+                        <a [routerLink]="['../customer', task.customerId  ]" >{{task.customerId}}</a>
+                    </div>
+                </td>
                 <td>
                     <div *ngIf="task.managerId">
                         <a [routerLink]="['../manager', task.managerId  ]" >{{task.managerId}}</a>

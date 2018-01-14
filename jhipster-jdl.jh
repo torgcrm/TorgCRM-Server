@@ -36,8 +36,8 @@ entity Deal {
 
 entity Task {
 	title String
-    beginDate LocalDate
-    endDate LocalDate
+    beginDate ZonedDateTime
+    endDate ZonedDateTime
     comment String
     type TaskType
 }
@@ -60,6 +60,10 @@ entity Manager {
 
 enum TaskType {
 	CALL, MEETING, EMAIL
+}
+
+relationship ManyToOne {
+	Task{customer} to Customer
 }
 
 relationship ManyToOne {

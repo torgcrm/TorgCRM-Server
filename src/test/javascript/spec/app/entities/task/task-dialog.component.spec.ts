@@ -8,6 +8,7 @@ import { TorgCrmTestModule } from '../../../test.module';
 import { TaskDialogComponent } from '../../../../../../main/webapp/app/entities/task/task-dialog.component';
 import { TaskService } from '../../../../../../main/webapp/app/entities/task/task.service';
 import { Task } from '../../../../../../main/webapp/app/entities/task/task.model';
+import { CustomerService } from '../../../../../../main/webapp/app/entities/customer';
 import { ManagerService } from '../../../../../../main/webapp/app/entities/manager';
 
 describe('Component Tests', () => {
@@ -24,6 +25,7 @@ describe('Component Tests', () => {
                 imports: [TorgCrmTestModule],
                 declarations: [TaskDialogComponent],
                 providers: [
+                    CustomerService,
                     ManagerService,
                     TaskService
                 ]

@@ -9,6 +9,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Task } from './task.model';
 import { TaskPopupService } from './task-popup.service';
 import { TaskService } from './task.service';
+import { Customer, CustomerService } from '../customer';
 import { Manager, ManagerService } from '../manager';
 import { ResponseWrapper } from '../../shared';
 
@@ -21,14 +22,15 @@ export class TaskDialogComponent implements OnInit {
     task: Task;
     isSaving: boolean;
 
+    customers: Customer[];
+
     managers: Manager[];
-    beginDateDp: any;
-    endDateDp: any;
 
     constructor(
         public activeModal: NgbActiveModal,
         private jhiAlertService: JhiAlertService,
         private taskService: TaskService,
+        private customerService: CustomerService,
         private managerService: ManagerService,
         private eventManager: JhiEventManager
     ) {
@@ -36,6 +38,8 @@ export class TaskDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
+        this.customerService.query()
+            .subscribe((res: ResponseWrapper) => { this.customers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.managerService.query()
             .subscribe((res: ResponseWrapper) => { this.managers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
@@ -72,6 +76,10 @@ export class TaskDialogComponent implements OnInit {
 
     private onError(error: any) {
         this.jhiAlertService.error(error.message, null, null);
+    }
+
+    trackCustomerById(index: number, item: Customer) {
+        return item.id;
     }
 
     trackManagerById(index: number, item: Manager) {

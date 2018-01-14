@@ -63,9 +63,9 @@ export class TaskService {
     private convertItemFromServer(json: any): Task {
         const entity: Task = Object.assign(new Task(), json);
         entity.beginDate = this.dateUtils
-            .convertLocalDateFromServer(json.beginDate);
+            .convertDateTimeFromServer(json.beginDate);
         entity.endDate = this.dateUtils
-            .convertLocalDateFromServer(json.endDate);
+            .convertDateTimeFromServer(json.endDate);
         return entity;
     }
 
@@ -74,10 +74,10 @@ export class TaskService {
      */
     private convert(task: Task): Task {
         const copy: Task = Object.assign({}, task);
-        copy.beginDate = this.dateUtils
-            .convertLocalDateToServer(task.beginDate);
-        copy.endDate = this.dateUtils
-            .convertLocalDateToServer(task.endDate);
+
+        copy.beginDate = this.dateUtils.toDate(task.beginDate);
+
+        copy.endDate = this.dateUtils.toDate(task.endDate);
         return copy;
     }
 }
